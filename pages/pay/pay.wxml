@@ -1,0 +1,37 @@
+<view class="container">
+  <view class="card" style="text-align: center; padding-top: 60rpx;">
+    <view style="font-size: 48rpx; color: #7c3aed; margin-bottom: 20rpx;">🎉 测试完成！</view>
+    <view style="font-size: 32rpx; color: #334155; margin-bottom: 60rpx;">
+      恭喜你完成MBTI & SBTI性格测试
+    </view>
+
+    <view style="background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; padding: 50rpx 40rpx; border-radius: 32rpx; margin: 40rpx 0;">
+      <view style="font-size: 28rpx; opacity: 0.9;">解锁完整报告仅需</view>
+      <view style="font-size: 88rpx; font-weight: bold; margin: 10rpx 0;">¥0.99</view>
+      <view style="font-size: 26rpx; opacity: 0.9;">一次购买 • 永久查看</view>
+    </view>
+
+    <view style="margin: 60rpx 0; text-align: left; font-size: 28rpx; line-height: 1.8; color: #475569;">
+      支付后你将获得：
+      <view style="margin-top: 20rpx;">
+        • 完整MBTI性格深度解读<br/>
+        • SBTI社交电池详细分析<br/>
+        • 个性化职业发展建议<br/>
+        • 自我成长行动指南
+      </view>
+    </view>
+
+    <view class="btn primary-btn" bindtap="makePayment" style="margin-top: 40rpx; font-size: 36rpx;">
+      支付 ¥0.99 解锁报告
+    </view>
+
+    <view class="btn secondary-btn" bindtap="backToTest" style="margin-top: 20rpx;">
+      返回重新测试
+    </view>
+  </view>
+
+  <!-- 支付说明 -->
+  <view style="text-align: center; margin-top: 60rpx; font-size: 24rpx; color: #94a3b8;">
+    支持微信支付 • 支付宝支付 • 安全加密
+  </view>
+</view>

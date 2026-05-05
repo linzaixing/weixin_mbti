@@ -1,0 +1,33 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  width: 85%;
+  max-height: 80%;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  overflow-y: auto;
+}
+
+.modal-title {
+  font-size: 42rpx;
+  font-weight: bold;
+  text-align: center;
+  color: #1e2937;
+  margin-bottom: 40rpx;
+}
+
+.modal-body {
+  font-size: 30rpx;
+}

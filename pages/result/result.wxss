@@ -1,0 +1,26 @@
+.result-type {
+  font-size: 88rpx;
+  font-weight: 700;
+  line-height: 1;
+  margin: 10rpx 0 20rpx;
+  letter-spacing: -2rpx;
+}
+
+.section-title {
+  font-size: 38rpx;
+  font-weight: 600;
+  color: #4f46e5;
+  margin: 10rpx 0 30rpx;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8rpx;
+  left: 0;
+  width: 60rpx;
+  height: 6rpx;
+  background: linear-gradient(to right, #7c3aed, #a855f7);
+  border-radius: 3rpx;
+}

@@ -1,0 +1,122 @@
+/**app.wxss**/
+page {
+  background-color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+.container {
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #1e2937;
+  margin-bottom: 20rpx;
+}
+
+.subtitle {
+  font-size: 32rpx;
+  color: #64748b;
+  margin-bottom: 40rpx;
+}
+
+.btn {
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  border-radius: 50rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  margin: 20rpx 0;
+  text-align: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: white;
+}
+
+.secondary-btn {
+  background: white;
+  color: #7c3aed;
+  border: 4rpx solid #7c3aed;
+}
+
+.card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  margin: 20rpx 0;
+  box-shadow: 0 10rpx 30rpx rgba(124, 58, 237, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress {
+  height: 12rpx;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin: 30rpx 0;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, #7c3aed, #a855f7);
+  transition: width 0.3s ease;
+}
+
+.question {
+  font-size: 36rpx;
+  line-height: 1.6;
+  color: #1e2937;
+  margin-bottom: 60rpx;
+}
+
+.option {
+  padding: 32rpx;
+  margin: 20rpx 0;
+  border: 4rpx solid #e2e8f0;
+  border-radius: 20rpx;
+  font-size: 32rpx;
+  color: #334155;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.option:active {
+  transform: scale(0.98);
+  background: #f1f5f9;
+}
+
+.option.selected {
+  border-color: #7c3aed;
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+
+.result-type {
+  font-size: 72rpx;
+  font-weight: bold;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin: 20rpx 0;
+}
+
+.report-section {
+  margin-top: 40rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  color: #7c3aed;
+  margin-bottom: 20rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 4rpx solid #e0e7ff;
+}

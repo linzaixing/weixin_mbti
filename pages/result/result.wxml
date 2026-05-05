@@ -1,0 +1,82 @@
+<view class="container">
+  <!-- 头部结果 -->
+  <view class="card" style="text-align: center; padding-top: 20rpx;">
+    <view style="font-size: 32rpx; color: #64748b; margin-bottom: 10rpx;">你的性格类型是</view>
+    <view class="result-type">{{result.mbtiType}}</view>
+    <view style="font-size: 36rpx; color: #6b21a8; font-weight: 600; margin-bottom: 30rpx;">{{getTypeName(result.mbtiType)}}</view>
+    
+    <!-- SBTI -->
+    <view style="background: #f0f9ff; padding: 30rpx; border-radius: 20rpx; margin: 30rpx 0;">
+      <view style="font-size: 30rpx; color: #0369a1; font-weight: 600;">SBTI 社交电池类型</view>
+      <view style="font-size: 42rpx; color: #0e7490; margin: 16rpx 0;">{{result.sbtiType}}</view>
+      <view class="progress" style="margin: 20rpx 0;">
+        <view class="progress-bar" style="width: {{Math.abs(result.sbtiLevel) + 50}}%; background: {{result.sbtiLevel > 0 ? '#0ea5e9' : '#64748b'}};"></view>
+      </view>
+      <view style="display: flex; justify-content: space-between; font-size: 26rpx; color: #64748b;">
+        <view>内向充电</view>
+        <view>外向活跃</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- MBTI 详细描述 -->
+  <view class="card">
+    <view class="section-title">性格概述</view>
+    <view style="font-size: 30rpx; line-height: 1.8; color: #334155;">
+      {{getDescription(result.mbtiType)}}
+    </view>
+  </view>
+
+  <!-- 优势与劣势 -->
+  <view class="card">
+    <view class="section-title">核心优势</view>
+    <view wx:for="{{getStrengths(result.mbtiType)}}" wx:key="index" style="padding: 20rpx; background: #f0fdf4; margin: 16rpx 0; border-radius: 16rpx; border-left: 8rpx solid #4ade80;">
+      {{item}}
+    </view>
+    
+    <view class="section-title" style="margin-top: 50rpx;">可能挑战</view>
+    <view wx:for="{{getWeaknesses(result.mbtiType)}}" wx:key="index" style="padding: 20rpx; background: #fef2f2; margin: 16rpx 0; border-radius: 16rpx; border-left: 8rpx solid #f87171;">
+      {{item}}
+    </view>
+  </view>
+
+  <!-- SBTI 分析 -->
+  <view class="card">
+    <view class="section-title">SBTI 社交电池分析</view>
+    <view style="font-size: 30rpx; line-height: 1.9; color: #334155;">
+      {{getSBTIAnalysis(result.sbtiType, result.sbtiLevel)}}
+    </view>
+    <view style="margin-top: 30rpx; padding: 30rpx; background: #ecfdf5; border-radius: 20rpx;">
+      <view style="color: #10b981; font-weight: 600; font-size: 32rpx;">能量指数：{{result.sbtiLevel > 0 ? '+' : ''}}{{result.sbtiLevel}}</view>
+      <view style="font-size: 28rpx; margin-top: 10rpx;">建议：{{getSBTIAdvice(result.sbtiType)}}</view>
+    </view>
+  </view>
+
+  <!-- 职业建议 -->
+  <view class="card">
+    <view class="section-title">适合的职业方向</view>
+    <view style="display: flex; flex-wrap: wrap; gap: 16rpx;">
+      <view wx:for="{{getCareers(result.mbtiType)}}" 
+            wx:key="index"
+            style="background: #f3e8ff; color: #6b21a8; padding: 16rpx 28rpx; border-radius: 9999px; font-size: 26rpx;">
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 行动建议 -->
+  <view class="card">
+    <view class="section-title">自我成长建议</view>
+    <view style="line-height: 2; font-size: 29rpx; color: #475569;">
+      • 多尝试不同社交场景，找到自己的能量平衡点<br/>
+      • 定期自我反思，记录不同情境下的感受<br/>
+      • 结合MBTI和SBTI，优化工作与生活安排<br/>
+      • 寻找志同道合的朋友，共同成长
+    </view>
+  </view>
+
+  <view style="margin: 60rpx 0 100rpx; text-align: center;">
+    <view class="btn primary-btn" bindtap="restartTest">重新测试</view>
+    <view class="btn secondary-btn" bindtap="shareResult" style="margin-top: 20rpx;">分享报告</view>
+  </view>
+</view>

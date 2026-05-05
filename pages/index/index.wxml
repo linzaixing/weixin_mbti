@@ -1,0 +1,52 @@
+<view class="container">
+  <view class="card">
+    <view class="title">性格测试</view>
+    <view class="subtitle">MBTI + SBTI 全面性格分析</view>
+    
+    <view style="text-align: center; margin: 40rpx 0;">
+      <image src="/images/test-icon.png" mode="widthFix" style="width: 200rpx; height: 200rpx;" wx:if="{{false}}"></image>
+    </view>
+    
+    <view style="font-size: 32rpx; line-height: 1.8; color: #475569; margin-bottom: 60rpx;">
+      探索你的真实性格类型！<br/>
+      通过科学MBTI测试和SBTI社交电池分析，<br/>
+      获得个性化性格报告和职业建议。
+    </view>
+    
+    <view class="btn primary-btn" bindtap="startTest">开始测试</view>
+    <view class="btn secondary-btn" bindtap="showAbout">了解MBTI & SBTI</view>
+  </view>
+  
+  <view class="card" style="margin-top: 40rpx;">
+    <view style="display: flex; justify-content: space-around; text-align: center; font-size: 28rpx; color: #64748b;">
+      <view>
+        <text style="font-size: 48rpx; color: #7c3aed;">16</text><br/>性格类型
+      </view>
+      <view>
+        <text style="font-size: 48rpx; color: #7c3aed;">30+</text><br/>测试题目
+      </view>
+      <view>
+        <text style="font-size: 48rpx; color: #7c3aed;">详尽</text><br/>报告分析
+      </view>
+    </view>
+  </view>
+  
+  <!-- 关于弹窗 -->
+  <view class="modal" wx:if="{{showModal}}" catchtap="hideModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-title">关于MBTI & SBTI</view>
+      <view class="modal-body">
+        <view class="section-title">MBTI（迈尔斯-布里格斯类型指标）</view>
+        <view style="font-size:28rpx; line-height:1.8; color:#475569; margin-bottom:40rpx;">
+          基于4个维度（E/I、S/N、T/F、J/P）划分的16种性格类型，帮助你了解自己的认知方式、决策风格和生活方式。
+        </view>
+        
+        <view class="section-title">SBTI（社交电池类型指标）</view>
+        <view style="font-size:28rpx; line-height:1.8; color:#475569;">
+          评估你在社交环境中的能量消耗与恢复能力，揭示你的社交偏好和充电方式。
+        </view>
+      </view>
+      <view class="btn primary-btn" style="margin-top:40rpx;" bindtap="hideModal">我知道了</view>
+    </view>
+  </view>
+</view>
