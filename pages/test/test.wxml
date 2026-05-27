@@ -25,12 +25,14 @@
   <!-- 底部导航 -->
   <view style="position: fixed; bottom: 40rpx; left: 0; right: 0; padding: 0 40rpx; display: flex; gap: 20rpx;">
     <view class="btn secondary-btn" 
+          hover-class="secondary-btn-active"
           style="flex: 1; opacity: {{current === 0 ? 0.5 : 1}}"
           bindtap="prevQuestion"
           wx:if="{{current > 0}}">
       上一题
     </view>
     <view class="btn primary-btn" 
+          hover-class="primary-btn-active"
           style="flex: 1;"
           bindtap="nextQuestion">
       {{current === questions.length - 1 ? '完成测试' : '下一题'}}

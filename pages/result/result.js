@@ -8,14 +8,14 @@ Page({
     sbtiBarWidth: 0,
     sbtiArchetype: null,
     sbtiLevels: [],
-    isPaid: false,
+    // 微信审核期间关闭付费门槛，默认完整展示
+    isPaid: true,
     isSBTI: false
   },
 
   onLoad () {
     const app = getApp()
     const result = app.globalData.testResults
-    const hasPaid = app.globalData.hasPaid || false
 
     if (!result) {
       wx.redirectTo({ url: '/pages/index/index' })
@@ -25,54 +25,31 @@ Page({
     const isSBTI = result.testMode === 'sbti'
     const setData = {
       result,
-      isPaid: hasPaid,
+      isPaid: true,
       isSBTI
     }
 
     if (isSBTI) {
-      // SBTI：5模型 + 趣味原型
       const archetype = getSBTIType(result.sbtiCode)
       const levels = (result.sbtiLevels || []).map(m => Object.assign({}, m, {
-        // 进度条左侧 0% ~ 中点 50% ~ 右侧 100%，level 范围 -100..100
         barPosition: Math.round((m.level + 100) / 2)
       }))
       setData.sbtiArchetype = archetype
       setData.sbtiLevels = levels
       wx.setNavigationBarTitle({
-        title: hasPaid
-          ? `SBTI · ${archetype.name}`
-          : `SBTI · ${archetype.name}（预览）`
+        title: `SBTI · ${archetype.name}`
       })
     } else {
-      // MBTI：原报告
       const report = buildReport(result.mbtiType, result.sbtiLevel || 0)
       const sbtiBarWidth = Math.round(((result.sbtiLevel || 0) + 100) / 2)
       setData.report = report
       setData.sbtiBarWidth = sbtiBarWidth
       wx.setNavigationBarTitle({
-        title: hasPaid ? `${result.mbtiType} 完整报告` : `${result.mbtiType} 测试结果（预览）`
+        title: `${result.mbtiType} 完整报告`
       })
     }
 
     this.setData(setData)
-  },
-
-  goToPay () {
-    wx.navigateTo({ url: '/pages/pay/pay' })
-  },
-
-  // 从支付页返回时（页面被重新显示），重读支付状态
-  onShow () {
-    const app = getApp()
-    const hasPaid = app.globalData.hasPaid || false
-    if (hasPaid !== this.data.isPaid) {
-      this.setData({ isPaid: hasPaid })
-      const { result, isSBTI, sbtiArchetype } = this.data
-      const title = isSBTI
-        ? (hasPaid && sbtiArchetype ? `SBTI · ${sbtiArchetype.name}` : 'SBTI 测试结果（预览）')
-        : (hasPaid && result ? `${result.mbtiType} 完整报告` : (result ? `${result.mbtiType} 测试结果（预览）` : 'MBTI 报告'))
-      wx.setNavigationBarTitle({ title })
-    }
   },
 
   restartTest () {

@@ -104,7 +104,8 @@ Page({
 
     const app = getApp()
     app.globalData.testResults = result
-    app.globalData.hasPaid = false
+    // 微信审核期间关闭付费门槛，所有用户直接查看完整报告
+    app.globalData.hasPaid = true
 
     wx.redirectTo({ url: '/pages/result/result' })
   }

@@ -1,3 +1,4 @@
+/* ============ 弹窗 ============ */
 .modal {
   position: fixed;
   top: 0;
@@ -30,4 +31,267 @@
 
 .modal-body {
   font-size: 30rpx;
+}
+
+/* ============ Hero 区域 ============ */
+.title {
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+  margin-bottom: 24rpx;
+}
+
+.hero-desc {
+  font-size: 32rpx;
+  line-height: 1.8;
+  color: #475569;
+  text-align: center;
+  margin: 36rpx 0 36rpx;
+}
+
+/* ============ 版本徽章 ============ */
+.version-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 10rpx 28rpx;
+  background: rgba(124, 58, 237, 0.08);
+  color: #7c3aed;
+  font-size: 24rpx;
+  border-radius: 9999px;
+  letter-spacing: 1rpx;
+}
+
+.version-badge-ver {
+  font-weight: 600;
+}
+
+.version-badge-sep {
+  margin: 0 14rpx;
+  opacity: 0.5;
+}
+
+.version-badge-hover {
+  background: rgba(124, 58, 237, 0.18);
+  transform: scale(0.97);
+}
+
+/* ============ 共享卡片头部 ============ */
+.card-header {
+  text-align: center;
+  margin-bottom: 26rpx;
+}
+
+.card-header-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1e2937;
+  letter-spacing: 1rpx;
+}
+
+.card-header-sub {
+  font-size: 24rpx;
+  color: #94a3b8;
+  margin-top: 6rpx;
+}
+
+/* ============ MBTI Swiper ============ */
+.mbti-swiper-card {
+  padding: 36rpx 24rpx 20rpx;
+}
+
+.mbti-swiper {
+  height: 340rpx;
+}
+
+.mbti-group {
+  text-align: center;
+  padding: 8rpx 0;
+}
+
+.mbti-group-label {
+  font-size: 28rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+  margin-bottom: 16rpx;
+}
+
+.mbti-figures {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 12rpx;
+}
+
+.mbti-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+}
+
+.figure-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+}
+
+.figure-img {
+  width: 100%;
+  height: 100%;
+}
+
+.figure-emoji-fallback {
+  font-size: 56rpx;
+  line-height: 1;
+}
+
+.figure-code {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: inherit;
+  letter-spacing: 0.5rpx;
+}
+
+.figure-name {
+  font-size: 20rpx;
+  color: #64748b;
+  margin-top: 4rpx;
+}
+
+.type-legend {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20rpx;
+  font-size: 22rpx;
+  color: #94a3b8;
+}
+
+/* ============ SBTI Swiper ============ */
+.sbti-swiper-card {
+  padding: 36rpx 24rpx 20rpx;
+  margin-top: 40rpx;
+}
+
+.sbti-swiper {
+  height: 180rpx;
+}
+
+.sbti-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.sbti-slide-emoji {
+  font-size: 80rpx;
+  margin-right: 28rpx;
+  line-height: 1;
+}
+
+.sbti-slide-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sbti-slide-code {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #be185d;
+  letter-spacing: 1rpx;
+}
+
+.sbti-slide-name {
+  font-size: 28rpx;
+  color: #64748b;
+  margin-top: 6rpx;
+}
+
+.sbti-cta {
+  text-align: center;
+  font-size: 22rpx;
+  color: #94a3b8;
+  margin-top: 16rpx;
+  letter-spacing: 1rpx;
+}
+
+/* ============ 底部版本信息 ============ */
+.footer-version {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 48rpx auto 20rpx;
+  padding: 14rpx 32rpx;
+  background: rgba(124, 58, 237, 0.06);
+  color: #94a3b8;
+  font-size: 22rpx;
+  border-radius: 9999px;
+  letter-spacing: 1rpx;
+}
+
+.footer-version .version-badge-ver {
+  color: #7c3aed;
+}
+
+/* ============ 更新日志弹窗条目 ============ */
+.changelog-item {
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f1f5f9;
+}
+
+.changelog-item:last-child {
+  border-bottom: none;
+}
+
+.changelog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.changelog-version {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #6b21a8;
+}
+
+.changelog-latest {
+  display: inline-block;
+  margin-left: 12rpx;
+  padding: 2rpx 14rpx;
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: #fff;
+  font-size: 20rpx;
+  font-weight: 500;
+  border-radius: 9999px;
+  vertical-align: middle;
+}
+
+.changelog-date {
+  font-size: 24rpx;
+  color: #94a3b8;
+}
+
+.changelog-subtitle {
+  font-size: 26rpx;
+  color: #64748b;
+  margin-bottom: 14rpx;
+}
+
+.changelog-line {
+  font-size: 28rpx;
+  line-height: 1.75;
+  color: #475569;
+  padding: 4rpx 0;
 }

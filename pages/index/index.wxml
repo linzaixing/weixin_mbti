@@ -1,22 +1,62 @@
 <view class="container">
+  <!-- ============ 顶部：MBTI 16 型 swiper ============ -->
+  <view class="card mbti-swiper-card">
+    <view class="card-header">
+      <view class="card-header-title">MBTI 16 型人格</view>
+      <view class="card-header-sub">每一个都是独一无二的你</view>
+    </view>
+
+    <swiper class="mbti-swiper"
+            autoplay circular
+            duration="500" interval="3000"
+            indicator-dots
+            indicator-color="rgba(124,58,237,0.2)"
+            indicator-active-color="#7c3aed">
+      <swiper-item wx:for="{{mbtiGroups}}" wx:key="label">
+        <view class="mbti-group">
+          <view class="mbti-group-label" style="color: {{item.color}}">{{item.label}}</view>
+          <view class="mbti-figures">
+            <view wx:for="{{item.types}}" wx:for-item="t" wx:key="code"
+                  class="mbti-figure" style="color: {{t.color}}">
+              <view class="figure-avatar">
+                <image wx:if="{{!imgErr[t.code]}}"
+                       src="{{t.img}}" mode="aspectFit"
+                       class="figure-img"
+                       binderror="onImgError"
+                       data-code="{{t.code}}" />
+                <text wx:else class="figure-emoji-fallback">{{t.emoji}}</text>
+              </view>
+              <view class="figure-code">{{t.code}}</view>
+              <view class="figure-name">{{t.name}}</view>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <view class="type-legend">
+      <view><text style="color:#7c3aed;">●</text> 紫人</view>
+      <view><text style="color:#16a34a;">●</text> 绿人</view>
+      <view><text style="color:#2563eb;">●</text> 蓝人</view>
+      <view><text style="color:#ea580c;">●</text> 橙人</view>
+    </view>
+  </view>
+
+  <!-- ============ Hero：性格测试 ============ -->
   <view class="card">
     <view class="title">性格测试</view>
     <view class="subtitle">MBTI + SBTI 全面性格分析</view>
-    
-    <view style="text-align: center; margin: 40rpx 0;">
-      <image src="/images/test-icon.png" mode="widthFix" style="width: 200rpx; height: 200rpx;" wx:if="{{false}}"></image>
-    </view>
-    
-    <view style="font-size: 32rpx; line-height: 1.8; color: #475569; margin-bottom: 30rpx;">
+
+    <view class="hero-desc">
       探索你的真实性格类型！<br/>
       MBTI（16型人格）+ SBTI（抽象行为测试）
     </view>
-    
-    <view class="btn primary-btn" bindtap="startMBTI">开始 MBTI 性格测试</view>
-    <view class="btn secondary-btn" bindtap="startSBTI" style="margin-top: 16rpx;">开始 SBTI 社交电池测试</view>
-    <view class="btn secondary-btn" bindtap="showAbout" style="margin-top: 30rpx; font-size: 30rpx;">了解 MBTI & SBTI</view>
+
+    <view class="btn primary-btn" hover-class="primary-btn-active" bindtap="startMBTI">开始 MBTI 性格测试</view>
+    <view class="btn secondary-btn" hover-class="secondary-btn-active" bindtap="startSBTI" style="margin-top: 16rpx;">开始 SBTI 社交电池测试</view>
+    <view class="btn secondary-btn" hover-class="secondary-btn-active" bindtap="showAbout" style="margin-top: 30rpx; font-size: 30rpx;">了解 MBTI & SBTI</view>
   </view>
-  
+
   <view class="card" style="margin-top: 40rpx;">
     <view style="display: flex; justify-content: space-around; text-align: center; font-size: 28rpx; color: #64748b;">
       <view>
@@ -31,18 +71,40 @@
     </view>
   </view>
 
-  <!-- 16种MBTI性格小人图 -->
-  <view class="card" style="margin-top: 20rpx; padding: 30rpx 24rpx;">
-    <view style="font-size: 30rpx; color: #64748b; margin-bottom: 20rpx; text-align: center; font-weight: 500;">16 种性格类型</view>
-    <image src="/images/mbti-16-types.jpg" mode="widthFix" style="width: 100%; border-radius: 20rpx;"></image>
-    <view style="display: flex; justify-content: space-around; margin-top: 20rpx; font-size: 24rpx; color: #94a3b8;">
-      <view><text style="color:#7c3aed;">●</text> 分析家</view>
-      <view><text style="color:#16a34a;">●</text> 外交家</view>
-      <view><text style="color:#2563eb;">●</text> 守护者</view>
-      <view><text style="color:#ea580c;">●</text> 探险家</view>
+  <!-- ============ 底部：SBTI 抽象人格 swiper ============ -->
+  <view class="card sbti-swiper-card">
+    <view class="card-header">
+      <view class="card-header-title">SBTI 抽象人格谱</view>
+      <view class="card-header-sub">32 种原型 · 精选 8 个抢先看</view>
     </view>
+
+    <swiper class="sbti-swiper"
+            autoplay circular
+            duration="500" interval="2500">
+      <swiper-item wx:for="{{sbtiTypes}}" wx:key="code">
+        <view class="sbti-slide">
+          <text class="sbti-slide-emoji">{{item.emoji}}</text>
+          <view class="sbti-slide-info">
+            <view class="sbti-slide-code">{{item.code}}</view>
+            <view class="sbti-slide-name">{{item.name}}</view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <view class="sbti-cta">完整 32 种解锁 · 测一测才知道 ↓</view>
   </view>
-  
+
+  <!-- ============ 底部版本信息 ============ -->
+  <view wx:if="{{version}}"
+        class="footer-version"
+        hover-class="version-badge-hover"
+        bindtap="showVersionLog">
+    <text class="version-badge-ver">v{{version}}</text>
+    <text class="version-badge-sep">·</text>
+    <text>查看更新日志 ›</text>
+  </view>
+
   <!-- 关于弹窗 -->
   <view class="modal" wx:if="{{showModal}}" catchtap="hideModal">
     <view class="modal-content" catchtap="stopPropagation">
@@ -52,13 +114,36 @@
         <view style="font-size:28rpx; line-height:1.8; color:#475569; margin-bottom:40rpx;">
           基于4个维度（E/I、S/N、T/F、J/P）划分的16种性格类型，帮助你了解自己的认知方式、决策风格和生活方式。
         </view>
-        
+
         <view class="section-title">SBTI（抽象行为测试）</view>
         <view style="font-size:28rpx; line-height:1.8; color:#475569;">
-          15维模型的趣味人格测试，包含自我、情感、态度、行动、社交五大模型，27种有趣结果，更贴近日常行为表达。
+          15维模型的趣味人格测试，包含自我、情感、态度、行动、社交五大模型，32种抽象人格，更贴近日常行为表达。
         </view>
       </view>
-      <view class="btn primary-btn" style="margin-top:40rpx;" bindtap="hideModal">我知道了</view>
+      <view class="btn primary-btn" hover-class="primary-btn-active" style="margin-top:40rpx;" bindtap="hideModal">我知道了</view>
+    </view>
+  </view>
+
+  <!-- 更新日志弹窗 -->
+  <view class="modal" wx:if="{{showChangelog}}" catchtap="hideVersionLog">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-title">更新日志</view>
+      <view class="modal-body">
+        <view wx:for="{{changelog}}" wx:key="version" class="changelog-item">
+          <view class="changelog-head">
+            <view class="changelog-version">
+              v{{item.version}}
+              <text wx:if="{{index === 0}}" class="changelog-latest">最新</text>
+            </view>
+            <view class="changelog-date">{{item.date}}</view>
+          </view>
+          <view wx:if="{{item.title}}" class="changelog-subtitle">{{item.title}}</view>
+          <view wx:for="{{item.changes}}" wx:for-item="line" wx:key="*this" class="changelog-line">
+            • {{line}}
+          </view>
+        </view>
+      </view>
+      <view class="btn primary-btn" hover-class="primary-btn-active" style="margin-top:30rpx;" bindtap="hideVersionLog">我知道了</view>
     </view>
   </view>
 </view>

@@ -1,12 +1,14 @@
 # 微信小程序 - MBTI 性格测试
 
-一款"MBTI 16 型 + SBTI 社交电池"性格分析的微信小程序，包含完整的题库、计算逻辑、付费解锁与分析报告。
+一款"MBTI 16 型 + SBTI 社交电池"性格分析的微信小程序，包含完整的题库、计算逻辑与分析报告。
+
+> 注：当前版本因微信审核要求已临时关闭付费功能与 `pages/pay` 页面，所有用户完成测试后直接查看完整报告。付费相关源代码（`pages/pay/*`、`utils/config.js` 中的 `PAY_CONFIG`）已保留，待审核通过后可再次启用：在 `app.json` 的 `pages` 中加回 `pages/pay/pay`，并把 `utils/config.js` 中的 `ENABLED` 改回 `true`，同时还原 `pages/test/test.js` 与 `pages/result/result.js` 中的 `hasPaid` 默认值即可。
 
 ## 功能特性
 
 - 28 道精心设计的测试题，覆盖 EI / SN / TF / JP 四个维度
 - 计算 MBTI 16 型 + SBTI 社交电池等级（-100 ~ 100）
-- 付费解锁完整报告（默认 ¥0.99，开发阶段使用模拟支付）
+- 完成测试后直接输出完整分析报告
 - 详尽的报告内容：
   - 类型概述、出现频率、口号
   - 核心优势 / 可能挑战
@@ -27,7 +29,7 @@ weixin_mbti/
 ├── pages/
 │   ├── index/                             首页（介绍 + 入口）
 │   ├── test/                              答题页
-│   ├── pay/                               支付解锁页
+│   ├── pay/                               支付解锁页（审核期已停用，源码保留）
 │   └── result/                            报告页
 ├── utils/
 │   ├── calculator.js                      MBTI / SBTI 计算逻辑
@@ -77,10 +79,10 @@ node test/calculator.test.js
 1. 打开"微信开发者工具" → 导入项目，选择本目录
 2. 使用 `project.config.json` 中已配置的 `appid`，或替换为你自己的 AppID
 3. 点击"编译"即可在模拟器中查看
-4. 真机预览前请在 `pages/pay/pay.js` 中将 `makePayment` 替换为 `realPayment`，并填入真实的 `wx.requestPayment` 参数
 
 ## 开发要点
 
 - **WXML 不能直接调用 Page 方法或 JS 内置函数**：所有派生数据已在 `result.js` 的 `onLoad` 中通过 `setData({ report })` 预计算，再在 WXML 中直接读取字段，避免渲染异常
 - 测试结果通过 `getApp().globalData.testResults` 在页面间传递，刷新或重启会丢失，符合一次性测试场景
-- 解锁状态存于 `getApp().globalData.hasPaid`，未付费访问 `result` 会自动跳回 `pay`
+- 审核期间所有用户视为已解锁，`result` 页直接展示完整报告；恢复付费时只需还原 `app.json` 注册、`PAY_CONFIG.ENABLED`、以及 `hasPaid` 的默认值
+- **版本号统一在 `utils/version.js` 维护**：`app.js`、首页底部 UI 都从这里读取；上传小程序时在微信开发者工具填的「版本号」、`package.json` 的 `version` 与小程序运行无关，按需保持一致即可

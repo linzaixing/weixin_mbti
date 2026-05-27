@@ -44,10 +44,24 @@ page {
   color: white;
 }
 
+.primary-btn-active {
+  background: linear-gradient(135deg, #6d28d9, #9333ea);
+  transform: scale(0.96);
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.15);
+}
+
 .secondary-btn {
   background: white;
   color: #7c3aed;
   border: 4rpx solid #7c3aed;
+}
+
+.secondary-btn-active {
+  background: #f3e8ff;
+  border-color: #6d28d9;
+  color: #6d28d9;
+  transform: scale(0.96);
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
 }
 
 .card {

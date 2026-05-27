@@ -19,7 +19,8 @@
  */
 const PAY_CONFIG = {
   // 是否启用真实微信支付（true=真实支付，false=本地演示模式）
-  ENABLED: true,
+  // 微信审核期间统一关闭，所有付费入口已在前端断开
+  ENABLED: false,
 
   // 后端 API 基地址，例如 https://api.your-domain.com
   BACKEND_BASE_URL: 'https://api.your-domain.com',

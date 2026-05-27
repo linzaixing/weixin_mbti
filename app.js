@@ -1,10 +1,13 @@
+const versionInfo = require('./utils/version.js')
+
 App({
   onLaunch: function () {
-    // 小程序启动时执行
-    console.log('小程序启动')
+    console.log('小程序启动 v' + versionInfo.version)
   },
   globalData: {
     userInfo: null,
-    testResults: null
+    testResults: null,
+    version: versionInfo.version,
+    changelog: versionInfo.changelog
   }
 })

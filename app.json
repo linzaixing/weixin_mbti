@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/test/test",
-    "pages/pay/pay",
     "pages/result/result"
   ],
   "window": {
@@ -13,6 +12,5 @@
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",
-  "version": "1.0.1",
-  "description": "专业的MBTI性格测试 + SBTI社交电池分析工具。完成测试后支付0.99元即可解锁完整性格报告。"
+  "description": "专业的 MBTI 性格测试 + SBTI 社交电池分析工具，完成测试后即可查看完整性格报告。"
 }
