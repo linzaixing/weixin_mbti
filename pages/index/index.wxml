@@ -92,7 +92,7 @@
       </swiper-item>
     </swiper>
 
-    <view class="sbti-cta">完整 32 种解锁 · 测一测才知道 ↓</view>
+    <view class="sbti-cta">完整 32 种解锁 · 测一测才知道 ↑</view>
   </view>
 
   <!-- ============ 底部版本信息 ============ -->
