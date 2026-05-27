@@ -1,0 +1,12 @@
+{
+  "name": "weixin-mbti",
+  "version": "1.0.1",
+  "description": "MBTI 性格测试 + SBTI 社交电池分析微信小程序",
+  "private": true,
+  "scripts": {
+    "test": "node test/calculator.test.js"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

@@ -1,188 +1,114 @@
-const typeDescriptions = {
-  'ISTJ': '责任担当者。认真、实际、注重细节和事实，重视传统和责任感。可靠且有条理。',
-  'ISFJ': '守护者。温暖、细心、忠诚，善于照顾他人，注重和谐与实际帮助。',
-  'INFJ': '洞察者。富有理想主义和洞察力，追求意义，擅长理解他人内心世界。',
-  'INTJ': '战略家。独立、有远见、理性，擅长制定长期计划和复杂系统。',
-  'ISTP': '工匠。冷静、实际、善于分析，喜欢动手解决问题和探索机制。',
-  'ISFP': '艺术家。温柔、敏感、注重当下，富有艺术感和同情心。',
-  'INFP': '理想主义者。富有创造力和价值观驱动，追求真实和内在和谐。',
-  'INTP': '逻辑学家。好奇、理性、独立思考者，热爱理论和复杂问题。',
-  'ESTP': '冒险家。精力充沛、机敏、注重当下，擅长危机处理和实际行动。',
-  'ESFP': '表演者。热情、外向、善于交际，热爱生活和给他人带来快乐。',
-  'ENFP': '竞选者。充满创意、热情、善于激发他人，想法丰富多变。',
-  'ENTP': '辩论家。聪明、机智、善于创新，喜欢挑战现有观点。',
-  'ESTJ': '管理者。实际、果断、有组织能力，擅长领导和执行计划。',
-  'ESFJ': '领事。热情、负责、善于社交，重视传统和人际关系。',
-  'ENFJ': '主人公。富有魅力、善于激励他人，关注个人成长和社会和谐。',
-  'ENTJ': '指挥官。自信、战略性强，擅长领导和实现宏大目标。'
-}
-
-const strengthsMap = {
-  'ISTJ': ['高度可靠', '注重细节', '强大责任感', '实际高效'],
-  'ISFJ': ['极具同情心', '忠诚可靠', '注重他人需求', '实践能力强'],
-  'INFJ': ['深刻洞察力', '理想主义', '创造性解决问题', '同理心强'],
-  'INTJ': ['战略思维', '独立自主', '高效率', '创新能力'],
-  'ISTP': ['问题解决高手', '冷静客观', '动手能力强', '适应力强'],
-  'ISFP': ['艺术天赋', '温柔体贴', '活在当下', '灵活适应'],
-  'INFP': ['富有创意', '价值观坚定', '同理心', '理想主义'],
-  'INTP': ['逻辑分析强', '创新思维', '独立思考', '知识渊博'],
-  'ESTP': ['行动力强', '危机处理', '实用技能', '大胆冒险'],
-  'ESFP': ['热情活力', '社交能力', '乐观积极', '即兴发挥'],
-  'ENFP': ['创意无限', '感染力强', '适应力', '人际联结'],
-  'ENTP': ['辩论高手', '创新想法', '快速学习', '战略思维'],
-  'ESTJ': ['领导力强', '组织能力', '执行力', '公正客观'],
-  'ESFJ': ['关怀他人', '团队协调', '责任心', '社交魅力'],
-  'ENFJ': ['激励他人', '领导魅力', '同理心', '战略视野'],
-  'ENTJ': ['强大领导力', '战略规划', '决断力', '执行效率']
-}
-
-const weaknessesMap = {
-  'ISTJ': ['可能过于固执', '难以适应变化', '忽略情感因素', '工作狂倾向'],
-  'ISFJ': ['回避冲突', '过度自我牺牲', '难以说不', '抗拒变革'],
-  'INFJ': ['完美主义', '容易 burnout', '过于敏感', '难以表达需求'],
-  'INTJ': ['可能显得冷漠', '忽略细节', '对他人期望高', '不善社交'],
-  'ISTP': ['情感表达少', '可能孤僻', '拖延决策', '回避承诺'],
-  'ISFP': ['回避冲突', '难以做决定', '过于敏感', '规划不足'],
-  'INFP': ['拖延倾向', '理想化现实', '难以专注', '情绪波动'],
-  'INTP': ['拖延执行', '社交回避', '完美主义', '忽略实际'],
-  'ESTP': ['冲动', '不耐烦', '回避长期规划', '风险过高'],
-  'ESFP': ['容易分心', '回避冲突', '规划不足', '短期思维'],
-  'ENFP': ['容易放弃', '组织能力弱', '情绪化', '难以专注'],
-  'ENTP': ['难以坚持', '争论倾向', '忽略细节', '不善跟进'],
-  'ESTJ': ['可能过于强势', '不灵活', '忽略情感', '控制欲强'],
-  'ESFJ': ['依赖他人认可', '回避冲突', '难以创新', '过于在意他人看法'],
-  'ENFJ': ['过度在意他人', '忽略自我需求', '可能操纵性', 'burnout 风险'],
-  'ENTJ': ['可能过于强势', '不耐烦', '忽略情感', '工作狂']
-}
-
-const careersMap = {
-  'ISTJ': ['会计师', '审计师', '项目经理', '行政管理', '法律工作者'],
-  'ISFJ': ['教师', '护士', '社工', '行政助理', '人力资源'],
-  'INFJ': ['心理咨询师', '作家', '教育者', '非营利组织', 'HR顾问'],
-  'INTJ': ['战略顾问', '科学家', '程序员', '企业家', '律师'],
-  'ISTP': ['工程师', '技师', '侦探', '飞行员', '建筑师'],
-  'ISFP': ['艺术家', '设计师', '厨师', '园艺师', '治疗师'],
-  'INFP': ['作家', '咨询师', '艺术家', '教师', '社工'],
-  'INTP': ['科学家', '研究员', '程序员', '哲学家', '分析师'],
-  'ESTP': ['销售', '企业家', '警察', '运动员', '急救人员'],
-  'ESFP': ['演员', '销售', '导游', '活动策划', '教师'],
-  'ENFP': ['记者', '广告创意', '创业者', '咨询师', '教师'],
-  'ENTP': ['企业家', '律师', '营销', '发明家', '咨询顾问'],
-  'ESTJ': ['经理', '行政主管', '销售总监', '警察', '教师'],
-  'ESFJ': ['教师', '护士', 'HR', '客服经理', '活动组织者'],
-  'ENFJ': ['教师', '领导者', '咨询师', '公关', '人力资源'],
-  'ENTJ': ['CEO', '律师', '管理顾问', '企业家', '政治家']
-}
+const { buildReport } = require('../../utils/personalityData.js')
+const { getSBTIType } = require('../../utils/sbtiTypes.js')
 
 Page({
   data: {
-    result: null
+    result: null,
+    report: null,
+    sbtiBarWidth: 0,
+    sbtiArchetype: null,
+    sbtiLevels: [],
+    isPaid: false,
+    isSBTI: false
   },
 
-  onLoad() {
+  onLoad () {
     const app = getApp()
     const result = app.globalData.testResults
     const hasPaid = app.globalData.hasPaid || false
-    
+
     if (!result) {
-      wx.redirectTo({
-        url: '/pages/index/index'
-      })
+      wx.redirectTo({ url: '/pages/index/index' })
       return
     }
-    
-    // 如果未支付，跳回支付页
-    if (!hasPaid) {
-      wx.redirectTo({
-        url: '/pages/pay/pay'
+
+    const isSBTI = result.testMode === 'sbti'
+    const setData = {
+      result,
+      isPaid: hasPaid,
+      isSBTI
+    }
+
+    if (isSBTI) {
+      // SBTI：5模型 + 趣味原型
+      const archetype = getSBTIType(result.sbtiCode)
+      const levels = (result.sbtiLevels || []).map(m => Object.assign({}, m, {
+        // 进度条左侧 0% ~ 中点 50% ~ 右侧 100%，level 范围 -100..100
+        barPosition: Math.round((m.level + 100) / 2)
+      }))
+      setData.sbtiArchetype = archetype
+      setData.sbtiLevels = levels
+      wx.setNavigationBarTitle({
+        title: hasPaid
+          ? `SBTI · ${archetype.name}`
+          : `SBTI · ${archetype.name}（预览）`
       })
-      return
-    }
-    
-    this.setData({ result })
-    
-    // 设置导航栏标题为类型
-    wx.setNavigationBarTitle({
-      title: `${result.mbtiType} 性格报告`
-    })
-  },
-
-  getTypeName(type) {
-    const names = {
-      'ISTJ': '物流师 / 检查员',
-      'ISFJ': '守护者 / 保护者',
-      'INFJ': '先知 / 倡导者',
-      'INTJ': '建筑师 / 战略家',
-      'ISTP': '工匠 / 技师',
-      'ISFP': '艺术家 / 探险家',
-      'INFP': '理想主义者 / 调解者',
-      'INTP': '逻辑学家 / 思想家',
-      'ESTP': '企业家 / 冒险家',
-      'ESFP': '表演者 / 娱乐家',
-      'ENFP': '竞选者 / 鼓舞者',
-      'ENTP': '辩论家 / 发明家',
-      'ESTJ': '管理者 / 总监',
-      'ESFJ': '领事 / 执政官',
-      'ENFJ': '主人公 / 教师',
-      'ENTJ': '指挥官 / 统帅'
-    }
-    return names[type] || type
-  },
-
-  getDescription(type) {
-    return typeDescriptions[type] || '这是一个独特且复杂的性格类型。'
-  },
-
-  getStrengths(type) {
-    return strengthsMap[type] || ['适应力强', '学习能力好']
-  },
-
-  getWeaknesses(type) {
-    return weaknessesMap[type] || ['需要改进规划能力']
-  },
-
-  getCareers(type) {
-    return careersMap[type] || ['多种职业方向']
-  },
-
-  getSBTIAnalysis(sbtiType, level) {
-    if (level > 40) {
-      return '你拥有强大的社交能量场，在人群中能自然地散发魅力并获得满足。你是典型的“充电型外向者”，社交活动能让你更加充满活力。建议多参与团队活动和公共演讲。'
-    } else if (level > 10) {
-      return '你能在内外向之间灵活切换，社交既能给你能量，也需要适当的独处来恢复。你是平衡型社交者，能根据情境调整自己的社交节奏。'
-    } else if (level > -30) {
-      return '你更倾向于有质量的深度连接，而非广泛的浅层社交。你需要精心选择社交对象和时机，避免能量过度消耗。'
     } else {
-      return '你属于“深度充电型”，独处和高质量的少量社交能让你恢复能量。你在安静的环境中思考和创作时表现最佳。建议建立清晰的社交边界。'
+      // MBTI：原报告
+      const report = buildReport(result.mbtiType, result.sbtiLevel || 0)
+      const sbtiBarWidth = Math.round(((result.sbtiLevel || 0) + 100) / 2)
+      setData.report = report
+      setData.sbtiBarWidth = sbtiBarWidth
+      wx.setNavigationBarTitle({
+        title: hasPaid ? `${result.mbtiType} 完整报告` : `${result.mbtiType} 测试结果（预览）`
+      })
+    }
+
+    this.setData(setData)
+  },
+
+  goToPay () {
+    wx.navigateTo({ url: '/pages/pay/pay' })
+  },
+
+  // 从支付页返回时（页面被重新显示），重读支付状态
+  onShow () {
+    const app = getApp()
+    const hasPaid = app.globalData.hasPaid || false
+    if (hasPaid !== this.data.isPaid) {
+      this.setData({ isPaid: hasPaid })
+      const { result, isSBTI, sbtiArchetype } = this.data
+      const title = isSBTI
+        ? (hasPaid && sbtiArchetype ? `SBTI · ${sbtiArchetype.name}` : 'SBTI 测试结果（预览）')
+        : (hasPaid && result ? `${result.mbtiType} 完整报告` : (result ? `${result.mbtiType} 测试结果（预览）` : 'MBTI 报告'))
+      wx.setNavigationBarTitle({ title })
     }
   },
 
-  getSBTIAdvice(sbtiType) {
-    if (sbtiType.includes('Energizer') || sbtiType.includes('外向')) {
-      return '保持社交活跃度，但也要安排独处时间避免 burnout'
-    } else if (sbtiType.includes('Balancer')) {
-      return '继续保持内外向平衡，根据不同场合灵活切换模式'
-    } else if (sbtiType.includes('Selector')) {
-      return '优先选择高质量的1-3人深度对话，避免大型聚会'
+  restartTest () {
+    const app = getApp()
+    app.globalData.testResults = null
+    app.globalData.hasPaid = false
+    wx.redirectTo({ url: '/pages/index/index' })
+  },
+
+  shareResult () {
+    const { result, report, sbtiArchetype, isSBTI } = this.data
+    if (!result) return
+    let text
+    if (isSBTI && sbtiArchetype) {
+      text = `我的 SBTI 抽象人格是「${sbtiArchetype.name}（${sbtiArchetype.code}）」—— ${sbtiArchetype.slogan}`
+    } else if (report) {
+      text = `我的 MBTI 是 ${result.mbtiType}（${report.typeName}），${report.slogan}`
     } else {
-      return '建立规律的“充电仪式”，如阅读、散步、冥想等'
+      text = '快来测测你的 MBTI/SBTI 性格吧'
     }
-  },
-
-  restartTest() {
-    getApp().globalData.testResults = null
-    wx.redirectTo({
-      url: '/pages/index/index'
+    wx.setClipboardData({
+      data: text,
+      success () {
+        wx.showToast({ title: '已复制分享文字', icon: 'success' })
+      }
     })
   },
 
-  shareResult() {
-    wx.showToast({
-      title: '报告已复制到剪贴板（模拟）',
-      icon: 'success'
-    })
-    
-    // 实际项目中可调用 wx.canvasToTempFilePath 生成分享图
-    console.log('分享内容：', this.data.result)
+  onShareAppMessage () {
+    const { result, report, sbtiArchetype, isSBTI } = this.data
+    let title = '快来测测你的性格吧'
+    if (isSBTI && sbtiArchetype) {
+      title = `我是 SBTI「${sbtiArchetype.name}」，你呢？`
+    } else if (result && report) {
+      title = `我是 ${result.mbtiType} · ${report.typeName}，你呢？`
+    }
+    return { title, path: '/pages/index/index' }
   }
 })

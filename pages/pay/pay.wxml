@@ -1,37 +1,46 @@
 <view class="container">
   <view class="card" style="text-align: center; padding-top: 60rpx;">
     <view style="font-size: 48rpx; color: #7c3aed; margin-bottom: 20rpx;">🎉 测试完成！</view>
-    <view style="font-size: 32rpx; color: #334155; margin-bottom: 60rpx;">
-      恭喜你完成MBTI & SBTI性格测试
+    <view style="font-size: 32rpx; color: #334155; margin-bottom: 30rpx;">
+      恭喜你完成性格测试
     </view>
 
     <view style="background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; padding: 50rpx 40rpx; border-radius: 32rpx; margin: 40rpx 0;">
       <view style="font-size: 28rpx; opacity: 0.9;">解锁完整报告仅需</view>
-      <view style="font-size: 88rpx; font-weight: bold; margin: 10rpx 0;">¥0.99</view>
-      <view style="font-size: 26rpx; opacity: 0.9;">一次购买 • 永久查看</view>
+      <view style="font-size: 88rpx; font-weight: bold; margin: 10rpx 0;">¥{{product.price}}</view>
+      <view style="font-size: 26rpx; opacity: 0.9;">一次购买 · 永久查看</view>
     </view>
 
-    <view style="margin: 60rpx 0; text-align: left; font-size: 28rpx; line-height: 1.8; color: #475569;">
-      支付后你将获得：
+    <view style="margin: 40rpx 0; text-align: left; font-size: 28rpx; line-height: 1.8; color: #475569;">
+      支付后解锁完整版报告：
       <view style="margin-top: 20rpx;">
-        • 完整MBTI性格深度解读<br/>
-        • SBTI社交电池详细分析<br/>
-        • 个性化职业发展建议<br/>
-        • 自我成长行动指南
+        • MBTI 深度性格解读 + 认知思维模式<br/>
+        • SBTI 五大模型雷达 + 抽象人格剧本<br/>
+        • 核心优势 / 潜在盲点 / 最佳搭档<br/>
+        • 个性化职业规划与成长建议
       </view>
     </view>
 
-    <view class="btn primary-btn" bindtap="makePayment" style="margin-top: 40rpx; font-size: 36rpx;">
-      支付 ¥0.99 解锁报告
+    <!-- 演示模式提示 -->
+    <view wx:if="{{!payEnabled}}" style="background: #fff7ed; color: #c2410c; padding: 20rpx; border-radius: 16rpx; font-size: 24rpx; line-height: 1.6; margin: 20rpx 0;">
+      ⚠️ 当前为「演示模式」<br/>
+      生产环境请在 utils/config.js 中开启 ENABLED 并配置后端
     </view>
 
+    <button class="btn primary-btn"
+            bindtap="onPay"
+            disabled="{{paying}}"
+            style="margin-top: 40rpx; font-size: 36rpx;">
+      {{paying ? '支付中...' : (payEnabled ? '微信支付 ¥' + product.price : '演示支付 ¥' + product.price)}}
+    </button>
+
     <view class="btn secondary-btn" bindtap="backToTest" style="margin-top: 20rpx;">
-      返回重新测试
+      返回
     </view>
   </view>
 
-  <!-- 支付说明 -->
-  <view style="text-align: center; margin-top: 60rpx; font-size: 24rpx; color: #94a3b8;">
-    支持微信支付 • 支付宝支付 • 安全加密
+  <view style="text-align: center; margin-top: 40rpx; font-size: 24rpx; color: #94a3b8; line-height: 1.7;">
+    使用微信支付 · 由商户号统一收单<br/>
+    支付前请确认你已了解服务内容
   </view>
 </view>

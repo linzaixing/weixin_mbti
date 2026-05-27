@@ -1,0 +1,18 @@
+.container {
+  padding: 30rpx;
+  padding-bottom: 240rpx;
+}
+
+/* 更优雅的题目排版 */
+.question {
+  font-size: 36rpx;
+  line-height: 1.7;
+  font-weight: 500;
+  color: #1e2937;
+  letter-spacing: -0.3rpx;
+}
+
+.option {
+  font-size: 32rpx;
+  line-height: 1.6;
+}

@@ -3,9 +3,15 @@ Page({
     showModal: false
   },
 
-  startTest() {
+  startMBTI() {
     wx.navigateTo({
-      url: '/pages/test/test'
+      url: '/pages/test/test?mode=mbti'
+    })
+  },
+
+  startSBTI() {
+    wx.navigateTo({
+      url: '/pages/test/test?mode=sbti'
     })
   },
 

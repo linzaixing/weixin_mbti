@@ -1,9 +1,10 @@
 .result-type {
-  font-size: 88rpx;
-  font-weight: 700;
+  font-size: 92rpx;
+  font-weight: 800;
   line-height: 1;
-  margin: 10rpx 0 20rpx;
-  letter-spacing: -2rpx;
+  margin: 10rpx 0 16rpx;
+  letter-spacing: -3rpx;
+  font-feature-settings: "palt";
 }
 
 .section-title {
@@ -23,4 +24,16 @@
   height: 6rpx;
   background: linear-gradient(to right, #7c3aed, #a855f7);
   border-radius: 3rpx;
+}
+
+/* 更优雅的正文排版 */
+.card {
+  font-size: 30rpx;
+  line-height: 1.75;
+  color: #334155;
+}
+
+.section-title {
+  font-size: 36rpx;
+  letter-spacing: -0.5rpx;
 }

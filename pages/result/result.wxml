@@ -1,82 +1,183 @@
-<view class="container">
-  <!-- 头部结果 -->
-  <view class="card" style="text-align: center; padding-top: 20rpx;">
-    <view style="font-size: 32rpx; color: #64748b; margin-bottom: 10rpx;">你的性格类型是</view>
-    <view class="result-type">{{result.mbtiType}}</view>
-    <view style="font-size: 36rpx; color: #6b21a8; font-weight: 600; margin-bottom: 30rpx;">{{getTypeName(result.mbtiType)}}</view>
-    
-    <!-- SBTI -->
-    <view style="background: #f0f9ff; padding: 30rpx; border-radius: 20rpx; margin: 30rpx 0;">
-      <view style="font-size: 30rpx; color: #0369a1; font-weight: 600;">SBTI 社交电池类型</view>
-      <view style="font-size: 42rpx; color: #0e7490; margin: 16rpx 0;">{{result.sbtiType}}</view>
-      <view class="progress" style="margin: 20rpx 0;">
-        <view class="progress-bar" style="width: {{Math.abs(result.sbtiLevel) + 50}}%; background: {{result.sbtiLevel > 0 ? '#0ea5e9' : '#64748b'}};"></view>
+<view class="container" wx:if="{{result}}">
+
+  <!-- ===================== SBTI 模式 ===================== -->
+  <block wx:if="{{isSBTI}}">
+    <!-- 趣味头部 -->
+    <view class="card" style="text-align: center; padding-top: 20rpx; background: linear-gradient(135deg, #fef3c7 0%, #fce7f3 100%);">
+      <view style="font-size: 28rpx; color: #92400e; margin-bottom: 10rpx;">你的 SBTI 抽象人格是</view>
+      <view class="result-type" style="font-size: 60rpx; background: linear-gradient(135deg, #db2777, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        {{sbtiArchetype.code}}
       </view>
-      <view style="display: flex; justify-content: space-between; font-size: 26rpx; color: #64748b;">
-        <view>内向充电</view>
-        <view>外向活跃</view>
+      <view style="font-size: 44rpx; color: #be185d; font-weight: 700; margin: 10rpx 0; letter-spacing: -1rpx;">
+        {{sbtiArchetype.name}}
       </view>
-    </view>
-  </view>
-
-  <!-- MBTI 详细描述 -->
-  <view class="card">
-    <view class="section-title">性格概述</view>
-    <view style="font-size: 30rpx; line-height: 1.8; color: #334155;">
-      {{getDescription(result.mbtiType)}}
-    </view>
-  </view>
-
-  <!-- 优势与劣势 -->
-  <view class="card">
-    <view class="section-title">核心优势</view>
-    <view wx:for="{{getStrengths(result.mbtiType)}}" wx:key="index" style="padding: 20rpx; background: #f0fdf4; margin: 16rpx 0; border-radius: 16rpx; border-left: 8rpx solid #4ade80;">
-      {{item}}
-    </view>
-    
-    <view class="section-title" style="margin-top: 50rpx;">可能挑战</view>
-    <view wx:for="{{getWeaknesses(result.mbtiType)}}" wx:key="index" style="padding: 20rpx; background: #fef2f2; margin: 16rpx 0; border-radius: 16rpx; border-left: 8rpx solid #f87171;">
-      {{item}}
-    </view>
-  </view>
-
-  <!-- SBTI 分析 -->
-  <view class="card">
-    <view class="section-title">SBTI 社交电池分析</view>
-    <view style="font-size: 30rpx; line-height: 1.9; color: #334155;">
-      {{getSBTIAnalysis(result.sbtiType, result.sbtiLevel)}}
-    </view>
-    <view style="margin-top: 30rpx; padding: 30rpx; background: #ecfdf5; border-radius: 20rpx;">
-      <view style="color: #10b981; font-weight: 600; font-size: 32rpx;">能量指数：{{result.sbtiLevel > 0 ? '+' : ''}}{{result.sbtiLevel}}</view>
-      <view style="font-size: 28rpx; margin-top: 10rpx;">建议：{{getSBTIAdvice(result.sbtiType)}}</view>
-    </view>
-  </view>
-
-  <!-- 职业建议 -->
-  <view class="card">
-    <view class="section-title">适合的职业方向</view>
-    <view style="display: flex; flex-wrap: wrap; gap: 16rpx;">
-      <view wx:for="{{getCareers(result.mbtiType)}}" 
-            wx:key="index"
-            style="background: #f3e8ff; color: #6b21a8; padding: 16rpx 28rpx; border-radius: 9999px; font-size: 26rpx;">
-        {{item}}
+      <view style="font-size: 28rpx; color: #92400e; padding: 16rpx 24rpx; background: rgba(255,255,255,0.6); border-radius: 16rpx; margin: 20rpx 0;">
+        "{{sbtiArchetype.slogan}}"
+      </view>
+      <view style="font-size: 24rpx; color: #94a3b8; margin-top: 16rpx;">
+        SBTI 编码：{{result.sbtiCode}}
       </view>
     </view>
-  </view>
 
-  <!-- 行动建议 -->
-  <view class="card">
-    <view class="section-title">自我成长建议</view>
-    <view style="line-height: 2; font-size: 29rpx; color: #475569;">
-      • 多尝试不同社交场景，找到自己的能量平衡点<br/>
-      • 定期自我反思，记录不同情境下的感受<br/>
-      • 结合MBTI和SBTI，优化工作与生活安排<br/>
-      • 寻找志同道合的朋友，共同成长
+    <!-- 未付费：只显示锁定提示 -->
+    <view wx:if="{{!isPaid}}" class="card" style="text-align: center; background: linear-gradient(135deg, #f8fafc, #fef3c7); padding: 50rpx 30rpx;">
+      <view style="font-size: 56rpx; margin-bottom: 16rpx;">🔒</view>
+      <view style="font-size: 32rpx; color: #92400e; font-weight: 600; margin-bottom: 16rpx;">支付 ¥1.99 解锁完整 SBTI 报告</view>
+      <view style="font-size: 26rpx; color: #78350f; line-height: 1.85; margin-bottom: 30rpx;">
+        包含：人格速描、五大模型雷达、核心优势、潜在盲点、最佳搭档、需警惕组合
+      </view>
+      <view class="btn primary-btn" bindtap="goToPay" style="font-size: 32rpx;">立即解锁完整报告</view>
+      <view style="font-size: 24rpx; color: #94a3b8; margin-top: 24rpx;">微信支付 · 一次解锁永久查看</view>
     </view>
-  </view>
 
+    <!-- 已付费：完整 SBTI 报告 -->
+    <view wx:if="{{isPaid}}">
+      <!-- 人格速描 -->
+      <view class="card">
+        <view class="section-title">人格速描</view>
+        <view style="font-size: 30rpx; line-height: 1.85; color: #334155;">
+          {{sbtiArchetype.desc}}
+        </view>
+      </view>
+
+      <!-- 5 模型 15 维落点 -->
+      <view class="card">
+        <view class="section-title">五大模型落点</view>
+        <view wx:for="{{sbtiLevels}}" wx:key="key" style="margin-bottom: 28rpx;">
+          <view style="display: flex; justify-content: space-between; font-size: 28rpx; margin-bottom: 8rpx;">
+            <view style="color: #334155; font-weight: 600;">{{item.name}}</view>
+            <view style="color: #7c3aed; font-weight: 600;">{{item.letter}} · {{item.polarity === 'pos' ? item.posTrait : item.negTrait}}</view>
+          </view>
+          <view class="progress" style="height: 14rpx; position: relative; background: #f1f5f9;">
+            <view style="position: absolute; left: 50%; top: 0; bottom: 0; width: 2rpx; background: #cbd5e1;"></view>
+            <view class="progress-bar" style="width: {{item.barPosition}}%; background: {{item.polarity === 'pos' ? 'linear-gradient(to right, #c084fc, #7c3aed)' : 'linear-gradient(to right, #fbbf24, #f59e0b)'}};"></view>
+          </view>
+          <view style="display: flex; justify-content: space-between; font-size: 22rpx; color: #94a3b8; margin-top: 6rpx;">
+            <view>{{item.negTrait}}</view>
+            <view>{{item.posTrait}}</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 优势 -->
+      <view class="card">
+        <view class="section-title">核心优势</view>
+        <view wx:for="{{sbtiArchetype.strengths}}" wx:key="index" style="padding: 18rpx 24rpx; background: #f0fdf4; margin: 12rpx 0; border-radius: 16rpx; border-left: 8rpx solid #4ade80; font-size: 28rpx; color: #166534;">
+          {{item}}
+        </view>
+      </view>
+
+      <!-- 盲点 -->
+      <view class="card">
+        <view class="section-title">潜在盲点</view>
+        <view wx:for="{{sbtiArchetype.weakness}}" wx:key="index" style="padding: 18rpx 24rpx; background: #fef2f2; margin: 12rpx 0; border-radius: 16rpx; border-left: 8rpx solid #f87171; font-size: 28rpx; color: #991b1b;">
+          {{item}}
+        </view>
+      </view>
+
+      <!-- 最佳搭档 -->
+      <view class="card">
+        <view class="section-title">人格匹配</view>
+        <view style="padding: 24rpx; background: #f0fdfa; border-radius: 20rpx; margin-bottom: 20rpx;">
+          <view style="font-size: 28rpx; color: #0f766e; font-weight: 600;">最佳搭档</view>
+          <view style="font-size: 30rpx; color: #134e4a; margin-top: 10rpx;">{{sbtiArchetype.bff}}</view>
+        </view>
+        <view style="padding: 24rpx; background: #fef2f2; border-radius: 20rpx;">
+          <view style="font-size: 28rpx; color: #b91c1c; font-weight: 600;">需要警惕</view>
+          <view style="font-size: 30rpx; color: #7f1d1d; margin-top: 10rpx;">{{sbtiArchetype.avoid}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ===================== MBTI 模式 ===================== -->
+  <block wx:else>
+    <view class="card" style="text-align: center; padding-top: 20rpx;" wx:if="{{report}}">
+      <view style="font-size: 32rpx; color: #64748b; margin-bottom: 10rpx;">你的性格类型是</view>
+      <view class="result-type">{{result.mbtiType}}</view>
+      <view style="font-size: 36rpx; color: #6b21a8; font-weight: 600; margin-bottom: 10rpx;">{{report.typeName}}</view>
+      <view style="font-size: 26rpx; color: #94a3b8; margin-bottom: 20rpx;">{{report.rarity}}</view>
+
+      <view style="font-size: 28rpx; color: #475569; line-height: 1.7; padding: 20rpx 10rpx; background: #f8fafc; border-radius: 16rpx; margin-top: 20rpx;">
+        "{{report.slogan}}"
+      </view>
+    </view>
+
+    <!-- 基本结论 + 支付引导 -->
+    <view class="card" style="text-align: center; background: linear-gradient(135deg, #f8fafc, #f1f5f9);" wx:if="{{report}}">
+      <view style="font-size: 28rpx; color: #64748b;">基本性格结论</view>
+      <view style="font-size: 32rpx; color: #334155; margin-top: 20rpx; line-height: 1.6;">
+        {{report.slogan}}
+      </view>
+      <view wx:if="{{!isPaid}}" style="margin-top: 40rpx;">
+        <view class="btn primary-btn" bindtap="goToPay" style="font-size: 32rpx;">支付 ¥1.99 解锁完整报告</view>
+        <view style="font-size: 24rpx; color: #94a3b8; margin-top: 20rpx;">
+          包含：职业规划、成长建议、关系分析、名人案例等
+        </view>
+      </view>
+    </view>
+
+    <!-- 完整报告 -->
+    <view wx:if="{{isPaid && report}}">
+      <view class="card">
+        <view class="section-title">性格概述</view>
+        <view style="font-size: 30rpx; line-height: 1.9; color: #334155;">{{report.description}}</view>
+      </view>
+
+      <view class="card">
+        <view class="section-title">认知思维模式</view>
+        <view style="font-size: 30rpx; line-height: 1.8; color: #334155;">{{report.cognitive}}</view>
+      </view>
+
+      <view class="card">
+        <view class="section-title">核心优势</view>
+        <view wx:for="{{report.strengths}}" wx:key="index" style="padding: 20rpx; background: #f0fdf4; margin: 16rpx 0; border-radius: 16rpx; border-left: 8rpx solid #4ade80; font-size: 28rpx; color: #166534;">
+          {{item}}
+        </view>
+        <view class="section-title" style="margin-top: 50rpx;">可能挑战</view>
+        <view wx:for="{{report.weaknesses}}" wx:key="index" style="padding: 20rpx; background: #fef2f2; margin: 16rpx 0; border-radius: 16rpx; border-left: 8rpx solid #f87171; font-size: 28rpx; color: #991b1b;">
+          {{item}}
+        </view>
+      </view>
+
+      <view class="card">
+        <view class="section-title">关系与亲密相处</view>
+        <view style="font-size: 30rpx; line-height: 1.9; color: #334155;">{{report.relationship}}</view>
+      </view>
+
+      <view class="card">
+        <view class="section-title">适合的职业方向</view>
+        <view style="display: flex; flex-wrap: wrap; gap: 16rpx;">
+          <view wx:for="{{report.careers}}" wx:key="index"
+                style="background: #f3e8ff; color: #6b21a8; padding: 16rpx 28rpx; border-radius: 9999px; font-size: 26rpx;">
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="card">
+        <view class="section-title">自我成长建议</view>
+        <view wx:for="{{report.growth}}" wx:key="index" style="font-size: 28rpx; line-height: 1.8; color: #475569; padding: 12rpx 0;">
+          • {{item}}
+        </view>
+      </view>
+
+      <view class="card">
+        <view class="section-title">同类型名人 / 角色</view>
+        <view style="display: flex; flex-wrap: wrap; gap: 16rpx;">
+          <view wx:for="{{report.famous}}" wx:key="index"
+                style="background: #fef3c7; color: #92400e; padding: 14rpx 24rpx; border-radius: 16rpx; font-size: 26rpx;">
+            {{item}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 底部按钮（始终显示） -->
   <view style="margin: 60rpx 0 100rpx; text-align: center;">
     <view class="btn primary-btn" bindtap="restartTest">重新测试</view>
-    <view class="btn secondary-btn" bindtap="shareResult" style="margin-top: 20rpx;">分享报告</view>
+    <view class="btn secondary-btn" bindtap="shareResult" style="margin-top: 20rpx;">复制分享文字</view>
+    <button class="btn secondary-btn" open-type="share" style="margin-top: 20rpx;">分享给好友</button>
   </view>
 </view>
