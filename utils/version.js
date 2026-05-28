@@ -24,16 +24,15 @@
  *   - package.json 的 version 是 npm 元数据，与小程序运行无关。
  */
 const VERSION_INFO = {
-  version: '1.3.0',
+  version: '1.4.0',
   changelog: [
     {
-      version: '1.3.0',
+      version: '1.4.0',
       date: '2026-05-28',
       title: '审核合规版',
       changes: [
-        '为符合微信审核要求，改动相关页面UI',
-        'MBTI/SBTI模式兼容，报告内容优化，新增16种性格类型小人图',
-        '首页新增版本徽章，点击可查看历史更新日志',
+        '新增NMTI测试功能',
+        '新增保存测试结果功能',
       ]
     }
   ]

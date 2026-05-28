@@ -1,13 +1,13 @@
 const { calculate: calculateMBTI } = require('../../utils/calculator.js')
 const { calculateSBTI } = require('../../utils/sbtiCalculator.js')
+const { calculateNMTI } = require('../../utils/nmtiCalculator.js')
 const { mbtiQuestions } = require('../../utils/mbtiQuestions.js')
 const { sbtiQuestions } = require('../../utils/sbtiQuestions.js')
+const { nmtiQuestions } = require('../../utils/nmtiQuestions.js')
 
-// 根据模式加载对应题库（完全解耦）
 function getQuestionsByMode(mode) {
-  if (mode === 'sbti') {
-    return sbtiQuestions
-  }
+  if (mode === 'sbti') return sbtiQuestions
+  if (mode === 'nmti') return nmtiQuestions
   return mbtiQuestions
 }
 
@@ -29,9 +29,8 @@ Page({
       testMode: mode
     })
     this.updateProgress()
-    wx.setNavigationBarTitle({
-      title: mode === 'sbti' ? 'SBTI 抽象人格测试' : 'MBTI 性格测试'
-    })
+    const titles = { mbti: 'MBTI 性格测试', sbti: 'SBTI 抽象人格测试', nmti: 'NMTI 职场牛马测试' }
+    wx.setNavigationBarTitle({ title: titles[mode] || titles.mbti })
   },
 
   selectOption(e) {
@@ -91,6 +90,8 @@ Page({
     let calc
     if (testMode === 'sbti') {
       calc = calculateSBTI(answers)
+    } else if (testMode === 'nmti') {
+      calc = calculateNMTI(answers)
     } else {
       calc = calculateMBTI(answers)
     }

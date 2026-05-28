@@ -1,5 +1,6 @@
 const { buildReport } = require('../../utils/personalityData.js')
 const { getSBTIType } = require('../../utils/sbtiTypes.js')
+const { getNMTIType } = require('../../utils/nmtiTypes.js')
 
 Page({
   data: {
@@ -8,9 +9,11 @@ Page({
     sbtiBarWidth: 0,
     sbtiArchetype: null,
     sbtiLevels: [],
-    // 微信审核期间关闭付费门槛，默认完整展示
+    nmtiArchetype: null,
+    nmtiLevels: [],
     isPaid: true,
-    isSBTI: false
+    isSBTI: false,
+    isNMTI: false
   },
 
   onLoad () {
@@ -23,13 +26,25 @@ Page({
     }
 
     const isSBTI = result.testMode === 'sbti'
+    const isNMTI = result.testMode === 'nmti'
     const setData = {
       result,
       isPaid: true,
-      isSBTI
+      isSBTI,
+      isNMTI
     }
 
-    if (isSBTI) {
+    if (isNMTI) {
+      const archetype = getNMTIType(result.nmtiCode)
+      const levels = (result.nmtiLevels || []).map(m => Object.assign({}, m, {
+        barPosition: Math.round((m.level + 100) / 2)
+      }))
+      setData.nmtiArchetype = archetype
+      setData.nmtiLevels = levels
+      wx.setNavigationBarTitle({
+        title: `NMTI · ${archetype.name}`
+      })
+    } else if (isSBTI) {
       const archetype = getSBTIType(result.sbtiCode)
       const levels = (result.sbtiLevels || []).map(m => Object.assign({}, m, {
         barPosition: Math.round((m.level + 100) / 2)
@@ -59,29 +74,184 @@ Page({
     wx.redirectTo({ url: '/pages/index/index' })
   },
 
-  shareResult () {
-    const { result, report, sbtiArchetype, isSBTI } = this.data
+  saveScreenshot () {
+    const that = this
+    const { result, report, sbtiArchetype, nmtiArchetype, isSBTI, isNMTI } = this.data
     if (!result) return
-    let text
-    if (isSBTI && sbtiArchetype) {
-      text = `我的 SBTI 抽象人格是「${sbtiArchetype.name}（${sbtiArchetype.code}）」—— ${sbtiArchetype.slogan}`
+
+    wx.showLoading({ title: '生成中...' })
+
+    const query = wx.createSelectorQuery()
+    query.select('#shareCanvas')
+      .fields({ node: true, size: true })
+      .exec(function (res) {
+        if (!res[0] || !res[0].node) {
+          wx.hideLoading()
+          wx.showToast({ title: '生成失败', icon: 'none' })
+          return
+        }
+        const canvas = res[0].node
+        const W = 750
+        const H = 880
+        const dpr = wx.getWindowInfo().pixelRatio || 2
+        canvas.width = W * dpr
+        canvas.height = H * dpr
+        const ctx = canvas.getContext('2d')
+        ctx.scale(dpr, dpr)
+
+        var qrImg = canvas.createImage()
+        qrImg.onload = function () {
+          that._drawCard(ctx, W, H, qrImg)
+          doSave()
+        }
+        qrImg.onerror = function () {
+          that._drawCard(ctx, W, H, null)
+          doSave()
+        }
+        qrImg.src = '/images/qrcode.png'
+
+        function doSave () {
+          setTimeout(function () {
+            wx.canvasToTempFilePath({
+              canvas: canvas,
+              width: W * dpr,
+              height: H * dpr,
+              destWidth: W * dpr,
+              destHeight: H * dpr,
+              success: function (tmpRes) {
+                wx.saveImageToPhotosAlbum({
+                  filePath: tmpRes.tempFilePath,
+                  success: function () {
+                    wx.hideLoading()
+                    wx.showToast({ title: '已保存到相册', icon: 'success' })
+                  },
+                  fail: function () {
+                    wx.hideLoading()
+                    wx.showToast({ title: '保存失败，请授权相册权限', icon: 'none' })
+                  }
+                })
+              },
+              fail: function () {
+                wx.hideLoading()
+                wx.showToast({ title: '生成图片失败', icon: 'none' })
+              }
+            })
+          }, 200)
+        }
+      })
+  },
+
+  _drawCard (ctx, W, H, qrImg) {
+    const { result, report, sbtiArchetype, nmtiArchetype, isSBTI, isNMTI } = this.data
+
+    ctx.fillStyle = '#f8fafc'
+    ctx.fillRect(0, 0, W, H)
+
+    ctx.fillStyle = '#ffffff'
+    const rx = 40, ry = 50, rw = W - 80, rh = H - 100, rr = 24
+    ctx.beginPath()
+    ctx.moveTo(rx + rr, ry)
+    ctx.lineTo(rx + rw - rr, ry)
+    ctx.arcTo(rx + rw, ry, rx + rw, ry + rr, rr)
+    ctx.lineTo(rx + rw, ry + rh - rr)
+    ctx.arcTo(rx + rw, ry + rh, rx + rw - rr, ry + rh, rr)
+    ctx.lineTo(rx + rr, ry + rh)
+    ctx.arcTo(rx, ry + rh, rx, ry + rh - rr, rr)
+    ctx.lineTo(rx, ry + rr)
+    ctx.arcTo(rx, ry, rx + rr, ry, rr)
+    ctx.closePath()
+    ctx.fill()
+
+    let title = '', subtitle = '', code = '', slogan = '', emoji = ''
+    let accentColor = '#7c3aed'
+
+    if (isNMTI && nmtiArchetype) {
+      title = 'NMTI 职场牛马测试'
+      subtitle = nmtiArchetype.name
+      code = nmtiArchetype.code
+      slogan = nmtiArchetype.slogan
+      emoji = nmtiArchetype.emoji
+      accentColor = '#ea580c'
+    } else if (isSBTI && sbtiArchetype) {
+      title = 'SBTI 抽象人格测试'
+      subtitle = sbtiArchetype.name
+      code = sbtiArchetype.code
+      slogan = sbtiArchetype.slogan
+      emoji = ''
     } else if (report) {
-      text = `我的 MBTI 是 ${result.mbtiType}（${report.typeName}），${report.slogan}`
-    } else {
-      text = '快来测测你的 MBTI/SBTI 性格吧'
+      title = 'MBTI 性格测试'
+      subtitle = report.typeName
+      code = result.mbtiType
+      slogan = report.slogan
+      emoji = ''
     }
-    wx.setClipboardData({
-      data: text,
-      success () {
-        wx.showToast({ title: '已复制分享文字', icon: 'success' })
-      }
-    })
+
+    let y = 130
+    ctx.fillStyle = '#94a3b8'
+    ctx.font = '24px sans-serif'
+    ctx.textAlign = 'center'
+    ctx.fillText(title, W / 2, y)
+
+    y += 80
+    if (emoji) {
+      ctx.font = '80px sans-serif'
+      ctx.fillText(emoji, W / 2, y)
+      y += 50
+    }
+
+    y += 40
+    ctx.fillStyle = accentColor
+    ctx.font = 'bold 72px sans-serif'
+    ctx.fillText(code, W / 2, y)
+
+    y += 70
+    ctx.fillStyle = '#1e2937'
+    ctx.font = 'bold 48px sans-serif'
+    ctx.fillText(subtitle, W / 2, y)
+
+    y += 70
+    ctx.fillStyle = '#64748b'
+    ctx.font = '26px sans-serif'
+    const maxSlogan = slogan.length > 30 ? slogan.substring(0, 30) + '...' : slogan
+    ctx.fillText('「' + maxSlogan + '」', W / 2, y)
+
+    // 二维码紧跟内容
+    y += 40
+    ctx.fillStyle = '#e2e8f0'
+    ctx.fillRect(100, y, W - 200, 1)
+
+    var qrSize = 160
+    if (qrImg) {
+      var qrX = (W - qrSize) / 2
+      var qrY = y + 25
+      ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize)
+
+      ctx.fillStyle = '#94a3b8'
+      ctx.font = '24px sans-serif'
+      ctx.textAlign = 'center'
+      ctx.fillText('长按识别 · 测测你是什么类型', W / 2, qrY + qrSize + 35)
+
+      ctx.fillStyle = '#cbd5e1'
+      ctx.font = '20px sans-serif'
+      ctx.fillText('MBTI + SBTI + NMTI 性格测试小程序', W / 2, qrY + qrSize + 65)
+    } else {
+      ctx.fillStyle = '#94a3b8'
+      ctx.font = '24px sans-serif'
+      ctx.textAlign = 'center'
+      ctx.fillText('你也来测测吧！', W / 2, y + 50)
+
+      ctx.fillStyle = '#cbd5e1'
+      ctx.font = '20px sans-serif'
+      ctx.fillText('MBTI + SBTI + NMTI 性格测试小程序', W / 2, y + 85)
+    }
   },
 
   onShareAppMessage () {
-    const { result, report, sbtiArchetype, isSBTI } = this.data
+    const { result, report, sbtiArchetype, nmtiArchetype, isSBTI, isNMTI } = this.data
     let title = '快来测测你的性格吧'
-    if (isSBTI && sbtiArchetype) {
+    if (isNMTI && nmtiArchetype) {
+      title = `我是职场「${nmtiArchetype.name}」，你呢？`
+    } else if (isSBTI && sbtiArchetype) {
       title = `我是 SBTI「${sbtiArchetype.name}」，你呢？`
     } else if (result && report) {
       title = `我是 ${result.mbtiType} · ${report.typeName}，你呢？`

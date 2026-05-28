@@ -1,0 +1,276 @@
+/**
+ * NMTI 职场牛马测试题库（28题）
+ *
+ * 4 大维度（每维度 7 题）：
+ *  - MJ: 摸鱼(M) vs 内卷(J) — 工作强度偏好
+ *  - DH: 独狼(D) vs 合群(H) — 职场协作方式
+ *  - RG: 忍者(R) vs 刚哥(G) — 冲突处理风格
+ *  - WP: 稳坐(W) vs 跑路(P) — 职业流动倾向
+ *
+ * score > 0 → 维度前字母 (M / D / R / W)
+ * score < 0 → 维度后字母 (J / H / G / P)
+ */
+
+const nmtiQuestions = [
+  // ========== MJ 维度：摸鱼 vs 内卷（7题）==========
+  {
+    id: 301,
+    text: '同事都在加班，只有你完成了工作，你会：',
+    dimension: 'MJ',
+    options: [
+      { id: 'A', text: 'A. 准时下班，生活是自己的', score: 5 },
+      { id: 'B', text: 'B. 留下来继续学习或帮忙，不能落后', score: -5 }
+    ]
+  },
+  {
+    id: 302,
+    text: '领导发了一个"自愿参加"的培训通知，你：',
+    dimension: 'MJ',
+    options: [
+      { id: 'A', text: 'A. 自愿 = 不去，开心做自己的事', score: 4 },
+      { id: 'B', text: 'B. 自愿也要去，多学点总没错', score: -4 }
+    ]
+  },
+  {
+    id: 303,
+    text: '工作群周末发消息，你的反应是：',
+    dimension: 'MJ',
+    options: [
+      { id: 'A', text: 'A. 看到了也假装没看到，周一再说', score: 5 },
+      { id: 'B', text: 'B. 立刻回复，展示责任心', score: -5 }
+    ]
+  },
+  {
+    id: 304,
+    text: '手头任务提前做完了，你会：',
+    dimension: 'MJ',
+    options: [
+      { id: 'A', text: 'A. 假装还在忙，偷偷刷手机', score: 4 },
+      { id: 'B', text: 'B. 主动找领导要新任务', score: -4 }
+    ]
+  },
+  {
+    id: 305,
+    text: '你对"996"的态度是：',
+    dimension: 'MJ',
+    options: [
+      { id: 'A', text: 'A. 违法的，ICU 的前奏', score: 5 },
+      { id: 'B', text: 'B. 虽然辛苦但能快速成长', score: -5 }
+    ]
+  },
+  {
+    id: 306,
+    text: '年终总结，你会：',
+    dimension: 'MJ',
+    options: [
+      { id: 'A', text: 'A. 复制去年的改改日期，差不多得了', score: 4 },
+      { id: 'B', text: 'B. 精心准备 PPT，争取被领导看到', score: -4 }
+    ]
+  },
+  {
+    id: 307,
+    text: '面对一个可做可不做的额外项目：',
+    dimension: 'MJ',
+    options: [
+      { id: 'A', text: 'A. 能不做就不做，做多错多', score: 3 },
+      { id: 'B', text: 'B. 抢着做，这是展示能力的机会', score: -3 }
+    ]
+  },
+
+  // ========== DH 维度：独狼 vs 合群（7题）==========
+  {
+    id: 308,
+    text: '午饭时间到了，你更喜欢：',
+    dimension: 'DH',
+    options: [
+      { id: 'A', text: 'A. 一个人安静地吃，享受独处', score: 5 },
+      { id: 'B', text: 'B. 和同事们一起约饭聊天', score: -5 }
+    ]
+  },
+  {
+    id: 309,
+    text: '遇到工作难题，你倾向于：',
+    dimension: 'DH',
+    options: [
+      { id: 'A', text: 'A. 自己死磕，搞定再说', score: 4 },
+      { id: 'B', text: 'B. 先问问同事或拉个群讨论', score: -4 }
+    ]
+  },
+  {
+    id: 310,
+    text: '团建活动，你的心态是：',
+    dimension: 'DH',
+    options: [
+      { id: 'A', text: 'A. 社恐地狱，能逃就逃', score: 5 },
+      { id: 'B', text: 'B. 好耶！可以和大家一起玩', score: -5 }
+    ]
+  },
+  {
+    id: 311,
+    text: '你理想的工位环境是：',
+    dimension: 'DH',
+    options: [
+      { id: 'A', text: 'A. 角落里的独立工位，最好有挡板', score: 4 },
+      { id: 'B', text: 'B. 开放式办公，随时和同事互动', score: -4 }
+    ]
+  },
+  {
+    id: 312,
+    text: '同事来找你闲聊，你的内心是：',
+    dimension: 'DH',
+    options: [
+      { id: 'A', text: 'A. "别来烦我，我要独处"', score: 5 },
+      { id: 'B', text: 'B. 开心聊，工作也需要社交润滑', score: -5 }
+    ]
+  },
+  {
+    id: 313,
+    text: '开会时你更常见的状态是：',
+    dimension: 'DH',
+    options: [
+      { id: 'A', text: 'A. 默默听，有事打字或私聊说', score: 4 },
+      { id: 'B', text: 'B. 积极发言，参与讨论', score: -4 }
+    ]
+  },
+  {
+    id: 314,
+    text: '下班后同事约你出去玩：',
+    dimension: 'DH',
+    options: [
+      { id: 'A', text: 'A. 下班了就是自己的时间，不去', score: 3 },
+      { id: 'B', text: 'B. 经常参加，同事关系很重要', score: -3 }
+    ]
+  },
+
+  // ========== RG 维度：忍者 vs 刚哥（7题）==========
+  {
+    id: 315,
+    text: '领导提了一个明显不合理的需求，你会：',
+    dimension: 'RG',
+    options: [
+      { id: 'A', text: 'A. 忍了，上面的指示先照做吧', score: 5 },
+      { id: 'B', text: 'B. 当面指出不合理的地方', score: -5 }
+    ]
+  },
+  {
+    id: 316,
+    text: '同事抢了你的功劳，你：',
+    dimension: 'RG',
+    options: [
+      { id: 'A', text: 'A. 算了，清者自清', score: 4 },
+      { id: 'B', text: 'B. 直接找领导说清楚', score: -4 }
+    ]
+  },
+  {
+    id: 317,
+    text: '被甩锅了，你的第一反应是：',
+    dimension: 'RG',
+    options: [
+      { id: 'A', text: 'A. 先背着吧，以后注意就行', score: 5 },
+      { id: 'B', text: 'B. 当场拿出证据，锅不是我的', score: -5 }
+    ]
+  },
+  {
+    id: 318,
+    text: '公司制度你觉得不公平：',
+    dimension: 'RG',
+    options: [
+      { id: 'A', text: 'A. 私下吐槽但不会公开说', score: 4 },
+      { id: 'B', text: 'B. 在公开场合提出质疑', score: -4 }
+    ]
+  },
+  {
+    id: 319,
+    text: '面对职场 PUA，你会：',
+    dimension: 'RG',
+    options: [
+      { id: 'A', text: 'A. 先忍着，等找到下家再说', score: 5 },
+      { id: 'B', text: 'B. 直接怼回去，大不了走人', score: -5 }
+    ]
+  },
+  {
+    id: 320,
+    text: '甲方/客户提了离谱的需求：',
+    dimension: 'RG',
+    options: [
+      { id: 'A', text: 'A. "好的收到" 先应着再想办法', score: 4 },
+      { id: 'B', text: 'B. 明确告知不可行，并给替代方案', score: -4 }
+    ]
+  },
+  {
+    id: 321,
+    text: '开会时有人一直打断你发言：',
+    dimension: 'RG',
+    options: [
+      { id: 'A', text: 'A. 算了不说了，让他表演', score: 3 },
+      { id: 'B', text: 'B. "请让我说完，谢谢"', score: -3 }
+    ]
+  },
+
+  // ========== WP 维度：稳坐 vs 跑路（7题）==========
+  {
+    id: 322,
+    text: '你对跳槽的态度是：',
+    dimension: 'WP',
+    options: [
+      { id: 'A', text: 'A. 稳定压倒一切，轻易不换', score: 5 },
+      { id: 'B', text: 'B. 此处不留爷，自有留爷处', score: -5 }
+    ]
+  },
+  {
+    id: 323,
+    text: '猎头打电话给你：',
+    dimension: 'WP',
+    options: [
+      { id: 'A', text: 'A. "谢谢，暂时不考虑"', score: 4 },
+      { id: 'B', text: 'B. "说来听听？多少钱？"', score: -4 }
+    ]
+  },
+  {
+    id: 324,
+    text: '公司降薪但不裁员，你：',
+    dimension: 'WP',
+    options: [
+      { id: 'A', text: 'A. 能接受，至少还有工作', score: 5 },
+      { id: 'B', text: 'B. 立刻更新简历，准备跑路', score: -5 }
+    ]
+  },
+  {
+    id: 325,
+    text: '你的简历更新频率：',
+    dimension: 'WP',
+    options: [
+      { id: 'A', text: 'A. 上次更新还是入职前', score: 4 },
+      { id: 'B', text: 'B. 随时保持最新版本', score: -4 }
+    ]
+  },
+  {
+    id: 326,
+    text: '你对"铁饭碗"的看法：',
+    dimension: 'WP',
+    options: [
+      { id: 'A', text: 'A. 太好了，稳定是福', score: 5 },
+      { id: 'B', text: 'B. 太无聊了，人生需要折腾', score: -5 }
+    ]
+  },
+  {
+    id: 327,
+    text: '同事纷纷跳槽涨薪，你：',
+    dimension: 'WP',
+    options: [
+      { id: 'A', text: 'A. 不为所动，每个人情况不同', score: 3 },
+      { id: 'B', text: 'B. 心动了，我是不是也该看看机会', score: -3 }
+    ]
+  },
+  {
+    id: 328,
+    text: '你的五年职业计划是：',
+    dimension: 'WP',
+    options: [
+      { id: 'A', text: 'A. 在当前公司稳步晋升', score: 4 },
+      { id: 'B', text: 'B. 可能换两三份工作找到最合适的', score: -4 }
+    ]
+  }
+]
+
+module.exports = { nmtiQuestions }

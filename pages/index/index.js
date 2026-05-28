@@ -52,6 +52,17 @@ const SBTI_HIGHLIGHTS = [
   { code: 'IMFW',   name: '废物',   emoji: '🌌' }
 ]
 
+const NMTI_HIGHLIGHTS = [
+  { code: 'MDRW', name: '老油条',     emoji: '🐟' },
+  { code: 'JDRW', name: '孤独卷王',   emoji: '⚡' },
+  { code: 'JHRW', name: '老黄牛',     emoji: '🐂' },
+  { code: 'JHGW', name: '职场一哥',   emoji: '👔' },
+  { code: 'MHGW', name: '吃瓜前排',   emoji: '🍉' },
+  { code: 'MHGP', name: '快乐咸鱼',   emoji: '🐠' },
+  { code: 'JDGP', name: '创业狠人',   emoji: '🚀' },
+  { code: 'JDGW', name: '技术大佬',   emoji: '💻' }
+]
+
 Page({
   data: {
     showModal: false,
@@ -60,6 +71,7 @@ Page({
     changelog: [],
     mbtiGroups: MBTI_GROUPS,
     sbtiTypes: SBTI_HIGHLIGHTS,
+    nmtiTypes: NMTI_HIGHLIGHTS,
     imgErr: {}
   },
 
@@ -77,6 +89,10 @@ Page({
 
   startSBTI() {
     wx.navigateTo({ url: '/pages/test/test?mode=sbti' })
+  },
+
+  startNMTI() {
+    wx.navigateTo({ url: '/pages/test/test?mode=nmti' })
   },
 
   showAbout() {

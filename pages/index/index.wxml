@@ -45,16 +45,17 @@
   <!-- ============ Hero：性格测试 ============ -->
   <view class="card">
     <view class="title">性格测试</view>
-    <view class="subtitle">MBTI + SBTI 全面性格分析</view>
+    <view class="subtitle">MBTI + SBTI + NMTI 全面性格分析</view>
 
     <view class="hero-desc">
       探索你的真实性格类型！<br/>
-      MBTI（16型人格）+ SBTI（抽象行为测试）
+      MBTI（16型人格）+ SBTI（抽象行为）+ NMTI（职场牛马）
     </view>
 
     <view class="btn primary-btn" hover-class="primary-btn-active" bindtap="startMBTI">开始 MBTI 性格测试</view>
-    <view class="btn secondary-btn" hover-class="secondary-btn-active" bindtap="startSBTI" style="margin-top: 16rpx;">开始 SBTI 社交电池测试</view>
-    <view class="btn secondary-btn" hover-class="secondary-btn-active" bindtap="showAbout" style="margin-top: 30rpx; font-size: 30rpx;">了解 MBTI & SBTI</view>
+    <view class="btn sbti-btn" hover-class="sbti-btn-active" bindtap="startSBTI" style="margin-top: 16rpx;">开始 SBTI 社交电池测试</view>
+    <view class="btn nmti-btn" hover-class="nmti-btn-active" bindtap="startNMTI" style="margin-top: 16rpx;">开始 NMTI 职场牛马测试</view>
+    <view class="btn secondary-btn" hover-class="secondary-btn-active" bindtap="showAbout" style="margin-top: 30rpx; font-size: 30rpx;">了解测试项目</view>
   </view>
 
   <view class="card" style="margin-top: 40rpx;">
@@ -64,6 +65,9 @@
       </view>
       <view>
         <text style="font-size: 48rpx; color: #7c3aed;">31</text><br/>SBTI 题
+      </view>
+      <view>
+        <text style="font-size: 48rpx; color: #ea580c;">28</text><br/>NMTI 题
       </view>
       <view>
         <text style="font-size: 48rpx; color: #7c3aed;">详尽</text><br/>报告分析
@@ -95,6 +99,30 @@
     <view class="sbti-cta">完整 32 种解锁 · 测一测才知道 ↑</view>
   </view>
 
+  <!-- ============ NMTI 职场牛马 swiper ============ -->
+  <view class="card nmti-swiper-card">
+    <view class="card-header">
+      <view class="card-header-title">NMTI 职场牛马谱</view>
+      <view class="card-header-sub">16 种打工人 · 精选 8 个抢先看</view>
+    </view>
+
+    <swiper class="nmti-swiper"
+            autoplay circular
+            duration="500" interval="2000">
+      <swiper-item wx:for="{{nmtiTypes}}" wx:key="code">
+        <view class="nmti-slide">
+          <text class="nmti-slide-emoji">{{item.emoji}}</text>
+          <view class="nmti-slide-info">
+            <view class="nmti-slide-code">{{item.code}}</view>
+            <view class="nmti-slide-name">{{item.name}}</view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <view class="nmti-cta">完整 16 种牛马人格 · 测一测才知道 ↑</view>
+  </view>
+
   <!-- ============ 底部版本信息 ============ -->
   <view wx:if="{{version}}"
         class="footer-version"
@@ -108,7 +136,7 @@
   <!-- 关于弹窗 -->
   <view class="modal" wx:if="{{showModal}}" catchtap="hideModal">
     <view class="modal-content" catchtap="stopPropagation">
-      <view class="modal-title">关于MBTI & SBTI</view>
+      <view class="modal-title">关于测试项目</view>
       <view class="modal-body">
         <view class="section-title">MBTI（16型人格）</view>
         <view style="font-size:28rpx; line-height:1.8; color:#475569; margin-bottom:40rpx;">
@@ -116,8 +144,13 @@
         </view>
 
         <view class="section-title">SBTI（抽象行为测试）</view>
-        <view style="font-size:28rpx; line-height:1.8; color:#475569;">
+        <view style="font-size:28rpx; line-height:1.8; color:#475569; margin-bottom:40rpx;">
           15维模型的趣味人格测试，包含自我、情感、态度、行动、社交五大模型，32种抽象人格，更贴近日常行为表达。
+        </view>
+
+        <view class="section-title">NMTI（职场牛马测试）</view>
+        <view style="font-size:28rpx; line-height:1.8; color:#475569;">
+          基于4个维度（摸鱼/内卷、独狼/合群、忍者/刚哥、稳坐/跑路）划分的16种职场人格，用最接地气的方式解读你的打工人本质。
         </view>
       </view>
       <view class="btn primary-btn" hover-class="primary-btn-active" style="margin-top:40rpx;" bindtap="hideModal">我知道了</view>

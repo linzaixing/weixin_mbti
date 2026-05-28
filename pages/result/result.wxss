@@ -37,3 +37,32 @@
   font-size: 36rpx;
   letter-spacing: -0.5rpx;
 }
+
+/* 重置 button 默认样式，使其与 view.btn 完全一致 */
+button.btn {
+  margin: 0;
+  padding: 0;
+  border: none;
+  line-height: 100rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  border-radius: 50rpx;
+  box-sizing: border-box;
+}
+
+button.btn::after {
+  border: none;
+}
+
+button.secondary-btn {
+  border: 4rpx solid #7c3aed;
+}
+
+/* 截图画布（不可见） */
+.share-canvas {
+  position: fixed;
+  left: -9999rpx;
+  top: 0;
+  width: 750rpx;
+  height: 880rpx;
+}

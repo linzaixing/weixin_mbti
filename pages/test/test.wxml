@@ -3,7 +3,7 @@
   <view class="card">
     <view style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20rpx;">
       <view style="font-size: 32rpx; color: #64748b;">第 <text style="color: #7c3aed; font-weight: bold;">{{current + 1}}</text> / {{questions.length}} 题</view>
-      <view style="font-size: 28rpx; color: #94a3b8;">{{testMode === 'sbti' ? 'SBTI测试' : 'MBTI测试'}}</view>
+      <view style="font-size: 28rpx; color: #94a3b8;">{{testMode === 'sbti' ? 'SBTI测试' : testMode === 'nmti' ? 'NMTI测试' : 'MBTI测试'}}</view>
     </view>
     <view class="progress">
       <view class="progress-bar" style="width: {{progress}}%"></view>
