@@ -16,8 +16,8 @@
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  width: 85%;
-  max-height: 80%;
+  width: 92%;
+  max-height: 85%;
   border-radius: 36rpx;
   padding: 48rpx 40rpx;
   overflow-y: auto;
@@ -513,4 +513,36 @@
   .changelog-item {
     border-bottom-color: rgba(139, 92, 246, 0.08);
   }
+}
+
+/* MBTI详解弹窗 */
+.mbti-detail-modal {
+  text-align: center;
+  padding: 56rpx 44rpx;
+}
+
+.mbti-detail-header {
+  margin-bottom: 24rpx;
+}
+
+.mbti-detail-code {
+  font-size: 80rpx;
+  font-weight: 800;
+  letter-spacing: 2rpx;
+}
+
+.mbti-detail-name {
+  font-size: 40rpx;
+  font-weight: 600;
+  margin-top: 12rpx;
+}
+
+.mbti-detail-desc {
+  font-size: 32rpx;
+  line-height: 2;
+  color: #475569;
+  text-align: left;
+  padding: 24rpx;
+  background: rgba(124, 58, 237, 0.04);
+  border-radius: 16rpx;
 }

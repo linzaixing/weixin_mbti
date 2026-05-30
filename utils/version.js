@@ -24,14 +24,16 @@
  *   - package.json 的 version 是 npm 元数据，与小程序运行无关。
  */
 const VERSION_INFO = {
-  version: '1.5.0',
+  version: '1.6.0',
   changelog: [
     {
-      version: '1.5.0',
-      date: '2026-05-30',
+      version: '1.6.0',
+      date: '2026-05-31',
       title: '审核合规版',
       changes: [
-        '优化UI界面',
+        '新增历史记录浏览功能',
+        '新增小人图谱交互功能',
+        "优化UI布局和样式",
       ]
     }
   ]

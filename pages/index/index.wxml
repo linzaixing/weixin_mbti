@@ -17,7 +17,9 @@
           <view class="mbti-group-label" style="color: {{item.color}}">{{item.label}}</view>
           <view class="mbti-figures">
             <view wx:for="{{item.types}}" wx:for-item="t" wx:key="code"
-                  class="mbti-figure" style="color: {{t.color}}">
+                  class="mbti-figure" style="color: {{t.color}}"
+                  bindtap="onMbtiTap"
+                  data-code="{{t.code}}" data-name="{{t.name}}" data-color="{{t.color}}">
               <view class="figure-avatar">
                 <image wx:if="{{!imgErr[t.code]}}"
                        src="{{t.img}}" mode="aspectFit"
@@ -90,7 +92,7 @@
             autoplay circular
             duration="500" interval="2500">
       <swiper-item wx:for="{{sbtiTypes}}" wx:key="code">
-        <view class="sbti-slide">
+        <view class="sbti-slide" bindtap="onSbtiTap" data-code="{{item.code}}" data-name="{{item.name}}">
           <image src="{{item.img}}" mode="aspectFill" class="slide-avatar" binderror="" />
           <view class="sbti-slide-info">
             <view class="sbti-slide-code">{{item.code}}</view>
@@ -114,7 +116,7 @@
             autoplay circular
             duration="500" interval="2000">
       <swiper-item wx:for="{{nmtiTypes}}" wx:key="code">
-        <view class="nmti-slide">
+        <view class="nmti-slide" bindtap="onNmtiTap" data-code="{{item.code}}" data-name="{{item.name}}">
           <image src="{{item.img}}" mode="aspectFill" class="slide-avatar" binderror="" />
           <view class="nmti-slide-info">
             <view class="nmti-slide-code">{{item.code}}</view>
@@ -127,14 +129,16 @@
     <view class="nmti-cta">完整 16 种牛马人格 · 测一测才知道 ↑</view>
   </view>
 
-  <!-- ============ 底部版本信息 ============ -->
-  <view wx:if="{{version}}"
-        class="footer-version"
-        hover-class="version-badge-hover"
-        bindtap="showVersionLog">
-    <text class="version-badge-ver">v{{version}}</text>
-    <text class="version-badge-sep">·</text>
-    <text>查看更新日志 ›</text>
+  <!-- MBTI人格详解弹窗 -->
+  <view class="modal" wx:if="{{showMbtiDetail}}" catchtap="hideMbtiDetail">
+    <view class="modal-content mbti-detail-modal" catchtap="stopPropagation">
+      <view class="mbti-detail-header" style="color: {{mbtiDetailType.color}};">
+        <view class="mbti-detail-code">{{mbtiDetailType.code}}</view>
+        <view class="mbti-detail-name">{{mbtiDetailType.name}}</view>
+      </view>
+      <view class="mbti-detail-desc">{{mbtiDetailDesc}}</view>
+      <view class="btn primary-btn" hover-class="primary-btn-active" style="margin-top: 32rpx;" bindtap="hideMbtiDetail">我知道了</view>
+    </view>
   </view>
 
   <!-- 关于弹窗 -->

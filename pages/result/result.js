@@ -19,7 +19,7 @@ Page({
     avatarLoadFail: false
   },
 
-  onLoad () {
+  onLoad (options) {
     const app = getApp()
     const result = app.globalData.testResults
 
@@ -79,6 +79,40 @@ Page({
     }
 
     this.setData(setData)
+    if (!options || options.from !== 'history') {
+      this._saveHistory(result, setData)
+    }
+  },
+
+  _saveHistory(result, setData) {
+    const now = new Date()
+    const time = now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() + ' ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0')
+    let resultCode = ''
+    let resultName = ''
+
+    if (result.testMode === 'nmti' && setData.nmtiArchetype) {
+      resultCode = setData.nmtiArchetype.code
+      resultName = setData.nmtiArchetype.name
+    } else if (result.testMode === 'sbti' && setData.sbtiArchetype) {
+      resultCode = setData.sbtiArchetype.code
+      resultName = setData.sbtiArchetype.name
+    } else if (setData.report) {
+      resultCode = result.mbtiType
+      resultName = setData.report.typeName
+    }
+
+    const record = {
+      testMode: result.testMode || 'mbti',
+      resultCode: resultCode,
+      resultName: resultName,
+      time: time,
+      results: result
+    }
+
+    const history = wx.getStorageSync('testHistory') || []
+    history.push(record)
+    if (history.length > 50) history.shift()
+    wx.setStorageSync('testHistory', history)
   },
 
   onAvatarError () {
