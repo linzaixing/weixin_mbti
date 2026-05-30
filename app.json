@@ -6,11 +6,12 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#7c3aed",
+    "navigationBarBackgroundColor": "#5b21b6",
     "navigationBarTitleText": "MBTI性格测试",
     "navigationBarTextStyle": "white"
   },
   "style": "v2",
+  "darkmode": true,
   "sitemapLocation": "sitemap.json",
   "description": "专业的 MBTI 性格测试 + SBTI 社交电池分析工具，完成测试后即可查看完整性格报告。"
 }

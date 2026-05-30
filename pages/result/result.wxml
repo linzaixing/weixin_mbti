@@ -2,40 +2,35 @@
 
   <!-- ===================== NMTI 模式 ===================== -->
   <block wx:if="{{isNMTI}}">
-    <view class="card" style="text-align: center; padding-top: 20rpx; background: linear-gradient(135deg, #fef9c3 0%, #fed7aa 100%);">
-      <view style="font-size: 28rpx; color: #92400e; margin-bottom: 10rpx;">你的职场牛马人格是</view>
-      <view style="font-size: 80rpx; line-height: 1.2;">{{nmtiArchetype.emoji}}</view>
-      <view class="result-type" style="font-size: 60rpx; background: linear-gradient(135deg, #ea580c, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+    <view class="card result-hero" style="background: linear-gradient(135deg, rgba(254,249,195,0.6), rgba(254,215,170,0.6));">
+      <view class="result-hero-label" style="color: #92400e;">你的职场牛马人格是</view>
+      <image wx:if="{{avatarImg && !avatarLoadFail}}" src="{{avatarImg}}" mode="aspectFit" class="result-avatar" binderror="onAvatarError" />
+      <view wx:elif="{{avatarEmoji}}" class="result-avatar result-avatar-emoji">{{avatarEmoji}}</view>
+      <view class="result-type" style="background: linear-gradient(135deg, #ea580c, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
         {{nmtiArchetype.code}}
       </view>
-      <view style="font-size: 44rpx; color: #c2410c; font-weight: 700; margin: 10rpx 0; letter-spacing: -1rpx;">
-        {{nmtiArchetype.name}}
-      </view>
-      <view style="font-size: 28rpx; color: #92400e; padding: 16rpx 24rpx; background: rgba(255,255,255,0.6); border-radius: 16rpx; margin: 20rpx 0;">
-        "{{nmtiArchetype.slogan}}"
-      </view>
+      <view class="result-hero-name" style="color: #c2410c;">{{nmtiArchetype.name}}</view>
+      <view class="result-hero-slogan" style="color: #92400e;">"{{nmtiArchetype.slogan}}"</view>
     </view>
 
     <view>
       <view class="card">
         <view class="section-title">人格速描</view>
-        <view style="font-size: 30rpx; line-height: 1.85; color: #334155;">
-          {{nmtiArchetype.desc}}
-        </view>
+        <view style="font-size: 28rpx; line-height: 1.9; color: #334155;">{{nmtiArchetype.desc}}</view>
       </view>
 
       <view class="card">
         <view class="section-title">四大维度</view>
         <view wx:for="{{nmtiLevels}}" wx:key="key" style="margin-bottom: 28rpx;">
-          <view style="display: flex; justify-content: space-between; font-size: 28rpx; margin-bottom: 8rpx;">
+          <view style="display: flex; justify-content: space-between; font-size: 26rpx; margin-bottom: 8rpx;">
             <view style="color: #334155; font-weight: 600;">{{item.name}}</view>
             <view style="color: #ea580c; font-weight: 600;">{{item.letter}} · {{item.polarity === 'pos' ? item.posTrait : item.negTrait}}</view>
           </view>
-          <view class="progress" style="height: 14rpx; position: relative; background: #f1f5f9;">
-            <view style="position: absolute; left: 50%; top: 0; bottom: 0; width: 2rpx; background: #cbd5e1;"></view>
+          <view class="progress" style="height: 14rpx; position: relative; background: rgba(124,58,237,0.06);">
+            <view style="position: absolute; left: 50%; top: 0; bottom: 0; width: 2rpx; background: #e2e8f0;"></view>
             <view class="progress-bar" style="width: {{item.barPosition}}%; background: {{item.polarity === 'pos' ? 'linear-gradient(to right, #fdba74, #ea580c)' : 'linear-gradient(to right, #86efac, #16a34a)'}};"></view>
           </view>
-          <view style="display: flex; justify-content: space-between; font-size: 22rpx; color: #94a3b8; margin-top: 6rpx;">
+          <view style="display: flex; justify-content: space-between; font-size: 20rpx; color: #a1a1aa; margin-top: 6rpx;">
             <view>{{item.negTrait}}</view>
             <view>{{item.posTrait}}</view>
           </view>
@@ -44,27 +39,27 @@
 
       <view class="card">
         <view class="section-title">核心优势</view>
-        <view wx:for="{{nmtiArchetype.strengths}}" wx:key="index" style="padding: 18rpx 24rpx; background: #fefce8; margin: 12rpx 0; border-radius: 16rpx; border-left: 8rpx solid #facc15; font-size: 28rpx; color: #854d0e;">
+        <view wx:for="{{nmtiArchetype.strengths}}" wx:key="index" class="trait-item" style="background: rgba(250,204,21,0.1); border-left: 8rpx solid #facc15; color: #854d0e;">
           {{item}}
         </view>
       </view>
 
       <view class="card">
         <view class="section-title">潜在盲点</view>
-        <view wx:for="{{nmtiArchetype.weakness}}" wx:key="index" style="padding: 18rpx 24rpx; background: #fff7ed; margin: 12rpx 0; border-radius: 16rpx; border-left: 8rpx solid #fb923c; font-size: 28rpx; color: #9a3412;">
+        <view wx:for="{{nmtiArchetype.weakness}}" wx:key="index" class="trait-item" style="background: rgba(251,146,60,0.1); border-left: 8rpx solid #fb923c; color: #9a3412;">
           {{item}}
         </view>
       </view>
 
       <view class="card">
         <view class="section-title">职场匹配</view>
-        <view style="padding: 24rpx; background: #fefce8; border-radius: 20rpx; margin-bottom: 20rpx;">
-          <view style="font-size: 28rpx; color: #854d0e; font-weight: 600;">最佳搭档</view>
-          <view style="font-size: 30rpx; color: #713f12; margin-top: 10rpx;">{{nmtiArchetype.bff}}</view>
+        <view class="match-block" style="background: rgba(250,204,21,0.08);">
+          <view class="match-block-title" style="color: #854d0e;">最佳搭档</view>
+          <view class="match-block-text" style="color: #713f12;">{{nmtiArchetype.bff}}</view>
         </view>
-        <view style="padding: 24rpx; background: #fff7ed; border-radius: 20rpx;">
-          <view style="font-size: 28rpx; color: #9a3412; font-weight: 600;">需要警惕</view>
-          <view style="font-size: 30rpx; color: #7c2d12; margin-top: 10rpx;">{{nmtiArchetype.avoid}}</view>
+        <view class="match-block" style="background: rgba(251,146,60,0.08);">
+          <view class="match-block-title" style="color: #9a3412;">需要警惕</view>
+          <view class="match-block-text" style="color: #7c2d12;">{{nmtiArchetype.avoid}}</view>
         </view>
       </view>
     </view>
@@ -72,78 +67,63 @@
 
   <!-- ===================== SBTI 模式 ===================== -->
   <block wx:elif="{{isSBTI}}">
-    <!-- 趣味头部 -->
-    <view class="card" style="text-align: center; padding-top: 20rpx; background: linear-gradient(135deg, #fef3c7 0%, #fce7f3 100%);">
-      <view style="font-size: 28rpx; color: #92400e; margin-bottom: 10rpx;">你的 SBTI 抽象人格是</view>
-      <view class="result-type" style="font-size: 60rpx; background: linear-gradient(135deg, #db2777, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+    <view class="card result-hero" style="background: linear-gradient(135deg, rgba(254,243,199,0.6), rgba(252,231,243,0.6));">
+      <view class="result-hero-label" style="color: #92400e;">你的 SBTI 抽象人格是</view>
+      <image wx:if="{{avatarImg && !avatarLoadFail}}" src="{{avatarImg}}" mode="aspectFit" class="result-avatar" binderror="onAvatarError" />
+      <view wx:elif="{{avatarEmoji}}" class="result-avatar result-avatar-emoji">{{avatarEmoji}}</view>
+      <view class="result-type" style="background: linear-gradient(135deg, #db2777, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
         {{sbtiArchetype.code}}
       </view>
-      <view style="font-size: 44rpx; color: #be185d; font-weight: 700; margin: 10rpx 0; letter-spacing: -1rpx;">
-        {{sbtiArchetype.name}}
-      </view>
-      <view style="font-size: 28rpx; color: #92400e; padding: 16rpx 24rpx; background: rgba(255,255,255,0.6); border-radius: 16rpx; margin: 20rpx 0;">
-        "{{sbtiArchetype.slogan}}"
-      </view>
-      <view style="font-size: 24rpx; color: #94a3b8; margin-top: 16rpx;">
+      <view class="result-hero-name" style="color: #be185d;">{{sbtiArchetype.name}}</view>
+      <view class="result-hero-slogan" style="color: #92400e;">"{{sbtiArchetype.slogan}}"</view>
+      <view style="font-size: 22rpx; color: #a1a1aa; margin-top: 16rpx; letter-spacing: 1rpx;">
         SBTI 编码：{{result.sbtiCode}}
       </view>
     </view>
 
-    <!-- 完整 SBTI 报告 -->
     <view>
-      <!-- 人格速描 -->
       <view class="card">
         <view class="section-title">人格速描</view>
-        <view style="font-size: 30rpx; line-height: 1.85; color: #334155;">
-          {{sbtiArchetype.desc}}
-        </view>
+        <view style="font-size: 28rpx; line-height: 1.9; color: #334155;">{{sbtiArchetype.desc}}</view>
       </view>
 
-      <!-- 5 模型 15 维落点 -->
       <view class="card">
         <view class="section-title">五大模型落点</view>
         <view wx:for="{{sbtiLevels}}" wx:key="key" style="margin-bottom: 28rpx;">
-          <view style="display: flex; justify-content: space-between; font-size: 28rpx; margin-bottom: 8rpx;">
+          <view style="display: flex; justify-content: space-between; font-size: 26rpx; margin-bottom: 8rpx;">
             <view style="color: #334155; font-weight: 600;">{{item.name}}</view>
-            <view style="color: #7c3aed; font-weight: 600;">{{item.letter}} · {{item.polarity === 'pos' ? item.posTrait : item.negTrait}}</view>
+            <view style="color: #6d28d9; font-weight: 600;">{{item.letter}} · {{item.polarity === 'pos' ? item.posTrait : item.negTrait}}</view>
           </view>
-          <view class="progress" style="height: 14rpx; position: relative; background: #f1f5f9;">
-            <view style="position: absolute; left: 50%; top: 0; bottom: 0; width: 2rpx; background: #cbd5e1;"></view>
+          <view class="progress" style="height: 14rpx; position: relative; background: rgba(124,58,237,0.06);">
+            <view style="position: absolute; left: 50%; top: 0; bottom: 0; width: 2rpx; background: #e2e8f0;"></view>
             <view class="progress-bar" style="width: {{item.barPosition}}%; background: {{item.polarity === 'pos' ? 'linear-gradient(to right, #c084fc, #7c3aed)' : 'linear-gradient(to right, #fbbf24, #f59e0b)'}};"></view>
           </view>
-          <view style="display: flex; justify-content: space-between; font-size: 22rpx; color: #94a3b8; margin-top: 6rpx;">
+          <view style="display: flex; justify-content: space-between; font-size: 20rpx; color: #a1a1aa; margin-top: 6rpx;">
             <view>{{item.negTrait}}</view>
             <view>{{item.posTrait}}</view>
           </view>
         </view>
       </view>
 
-      <!-- 优势 -->
       <view class="card">
         <view class="section-title">核心优势</view>
-        <view wx:for="{{sbtiArchetype.strengths}}" wx:key="index" style="padding: 18rpx 24rpx; background: #f0fdf4; margin: 12rpx 0; border-radius: 16rpx; border-left: 8rpx solid #4ade80; font-size: 28rpx; color: #166534;">
-          {{item}}
-        </view>
+        <view wx:for="{{sbtiArchetype.strengths}}" wx:key="index" class="trait-item trait-strength">{{item}}</view>
       </view>
 
-      <!-- 盲点 -->
       <view class="card">
         <view class="section-title">潜在盲点</view>
-        <view wx:for="{{sbtiArchetype.weakness}}" wx:key="index" style="padding: 18rpx 24rpx; background: #fef2f2; margin: 12rpx 0; border-radius: 16rpx; border-left: 8rpx solid #f87171; font-size: 28rpx; color: #991b1b;">
-          {{item}}
-        </view>
+        <view wx:for="{{sbtiArchetype.weakness}}" wx:key="index" class="trait-item trait-weakness">{{item}}</view>
       </view>
 
-      <!-- 最佳搭档 -->
       <view class="card">
         <view class="section-title">人格匹配</view>
-        <view style="padding: 24rpx; background: #f0fdfa; border-radius: 20rpx; margin-bottom: 20rpx;">
-          <view style="font-size: 28rpx; color: #0f766e; font-weight: 600;">最佳搭档</view>
-          <view style="font-size: 30rpx; color: #134e4a; margin-top: 10rpx;">{{sbtiArchetype.bff}}</view>
+        <view class="match-block" style="background: rgba(13,148,136,0.06);">
+          <view class="match-block-title" style="color: #0f766e;">最佳搭档</view>
+          <view class="match-block-text" style="color: #134e4a;">{{sbtiArchetype.bff}}</view>
         </view>
-        <view style="padding: 24rpx; background: #fef2f2; border-radius: 20rpx;">
-          <view style="font-size: 28rpx; color: #b91c1c; font-weight: 600;">需要警惕</view>
-          <view style="font-size: 30rpx; color: #7f1d1d; margin-top: 10rpx;">{{sbtiArchetype.avoid}}</view>
+        <view class="match-block" style="background: rgba(248,113,113,0.06);">
+          <view class="match-block-title" style="color: #b91c1c;">需要警惕</view>
+          <view class="match-block-text" style="color: #7f1d1d;">{{sbtiArchetype.avoid}}</view>
         </view>
       </view>
     </view>
@@ -151,84 +131,64 @@
 
   <!-- ===================== MBTI 模式 ===================== -->
   <block wx:else>
-    <view class="card" style="text-align: center; padding-top: 20rpx;" wx:if="{{report}}">
-      <view style="font-size: 32rpx; color: #64748b; margin-bottom: 10rpx;">你的性格类型是</view>
+    <view class="card result-hero" wx:if="{{report}}">
+      <view class="result-hero-label">你的性格类型是</view>
+      <image wx:if="{{avatarImg && !avatarLoadFail}}" src="{{avatarImg}}" mode="aspectFit" class="result-avatar" binderror="onAvatarError" />
+      <view wx:elif="{{avatarEmoji}}" class="result-avatar result-avatar-emoji">{{avatarEmoji}}</view>
       <view class="result-type">{{result.mbtiType}}</view>
-      <view style="font-size: 36rpx; color: #6b21a8; font-weight: 600; margin-bottom: 10rpx;">{{report.typeName}}</view>
-      <view style="font-size: 26rpx; color: #94a3b8; margin-bottom: 20rpx;">{{report.rarity}}</view>
-
-      <view style="font-size: 28rpx; color: #475569; line-height: 1.7; padding: 20rpx 10rpx; background: #f8fafc; border-radius: 16rpx; margin-top: 20rpx;">
-        "{{report.slogan}}"
-      </view>
+      <view class="result-hero-name" style="color: #6d28d9;">{{report.typeName}}</view>
+      <view style="font-size: 22rpx; color: #a1a1aa; margin-bottom: 16rpx;">{{report.rarity}}</view>
+      <view class="result-hero-slogan">"{{report.slogan}}"</view>
     </view>
 
-    <!-- 基本结论 -->
-    <view class="card" style="text-align: center; background: linear-gradient(135deg, #f8fafc, #f1f5f9);" wx:if="{{report}}">
-      <view style="font-size: 28rpx; color: #64748b;">基本性格结论</view>
-      <view style="font-size: 32rpx; color: #334155; margin-top: 20rpx; line-height: 1.6;">
-        {{report.slogan}}
-      </view>
-    </view>
-
-    <!-- 完整报告 -->
     <view wx:if="{{report}}">
       <view class="card">
         <view class="section-title">性格概述</view>
-        <view style="font-size: 30rpx; line-height: 1.9; color: #334155;">{{report.description}}</view>
+        <view style="font-size: 28rpx; line-height: 1.9; color: #334155;">{{report.description}}</view>
       </view>
 
       <view class="card">
         <view class="section-title">认知思维模式</view>
-        <view style="font-size: 30rpx; line-height: 1.8; color: #334155;">{{report.cognitive}}</view>
+        <view style="font-size: 28rpx; line-height: 1.9; color: #334155;">{{report.cognitive}}</view>
       </view>
 
       <view class="card">
         <view class="section-title">核心优势</view>
-        <view wx:for="{{report.strengths}}" wx:key="index" style="padding: 20rpx; background: #f0fdf4; margin: 16rpx 0; border-radius: 16rpx; border-left: 8rpx solid #4ade80; font-size: 28rpx; color: #166534;">
-          {{item}}
-        </view>
-        <view class="section-title" style="margin-top: 50rpx;">可能挑战</view>
-        <view wx:for="{{report.weaknesses}}" wx:key="index" style="padding: 20rpx; background: #fef2f2; margin: 16rpx 0; border-radius: 16rpx; border-left: 8rpx solid #f87171; font-size: 28rpx; color: #991b1b;">
-          {{item}}
-        </view>
+        <view wx:for="{{report.strengths}}" wx:key="index" class="trait-item trait-strength">{{item}}</view>
+        <view class="section-title" style="margin-top: 44rpx;">可能挑战</view>
+        <view wx:for="{{report.weaknesses}}" wx:key="index" class="trait-item trait-weakness">{{item}}</view>
       </view>
 
       <view class="card">
         <view class="section-title">关系与亲密相处</view>
-        <view style="font-size: 30rpx; line-height: 1.9; color: #334155;">{{report.relationship}}</view>
+        <view style="font-size: 28rpx; line-height: 1.9; color: #334155;">{{report.relationship}}</view>
       </view>
 
       <view class="card">
         <view class="section-title">适合的职业方向</view>
         <view style="display: flex; flex-wrap: wrap; gap: 16rpx;">
-          <view wx:for="{{report.careers}}" wx:key="index"
-                style="background: #f3e8ff; color: #6b21a8; padding: 16rpx 28rpx; border-radius: 9999px; font-size: 26rpx;">
-            {{item}}
-          </view>
+          <view wx:for="{{report.careers}}" wx:key="index" class="career-tag">{{item}}</view>
         </view>
       </view>
 
       <view class="card">
         <view class="section-title">自我成长建议</view>
-        <view wx:for="{{report.growth}}" wx:key="index" style="font-size: 28rpx; line-height: 1.8; color: #475569; padding: 12rpx 0;">
+        <view wx:for="{{report.growth}}" wx:key="index" style="font-size: 26rpx; line-height: 1.9; color: #475569; padding: 10rpx 0;">
           • {{item}}
         </view>
       </view>
 
       <view class="card">
         <view class="section-title">同类型名人 / 角色</view>
-        <view style="display: flex; flex-wrap: wrap; gap: 16rpx;">
-          <view wx:for="{{report.famous}}" wx:key="index"
-                style="background: #fef3c7; color: #92400e; padding: 14rpx 24rpx; border-radius: 16rpx; font-size: 26rpx;">
-            {{item}}
-          </view>
+        <view style="display: flex; flex-wrap: wrap; gap: 14rpx;">
+          <view wx:for="{{report.famous}}" wx:key="index" class="famous-tag">{{item}}</view>
         </view>
       </view>
     </view>
   </block>
 
-  <!-- 底部按钮（始终显示） -->
-  <view style="margin: 60rpx 0 100rpx; text-align: center;">
+  <!-- 底部按钮 -->
+  <view class="result-actions">
     <view class="btn primary-btn" hover-class="primary-btn-active" bindtap="restartTest">重新测试</view>
     <view class="btn secondary-btn" hover-class="secondary-btn-active" bindtap="saveScreenshot" style="margin-top: 20rpx;">保存截图到本地</view>
     <button class="btn secondary-btn" hover-class="secondary-btn-active" open-type="share" style="margin-top: 20rpx;">分享给好友</button>

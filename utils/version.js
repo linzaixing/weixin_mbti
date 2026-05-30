@@ -24,15 +24,14 @@
  *   - package.json 的 version 是 npm 元数据，与小程序运行无关。
  */
 const VERSION_INFO = {
-  version: '1.4.0',
+  version: '1.5.0',
   changelog: [
     {
-      version: '1.4.0',
-      date: '2026-05-28',
+      version: '1.5.0',
+      date: '2026-05-30',
       title: '审核合规版',
       changes: [
-        '新增NMTI测试功能',
-        '新增保存测试结果功能',
+        '优化UI界面',
       ]
     }
   ]

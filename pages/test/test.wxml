@@ -1,9 +1,9 @@
 <view class="container">
   <!-- 进度 -->
   <view class="card">
-    <view style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20rpx;">
-      <view style="font-size: 32rpx; color: #64748b;">第 <text style="color: #7c3aed; font-weight: bold;">{{current + 1}}</text> / {{questions.length}} 题</view>
-      <view style="font-size: 28rpx; color: #94a3b8;">{{testMode === 'sbti' ? 'SBTI测试' : testMode === 'nmti' ? 'NMTI测试' : 'MBTI测试'}}</view>
+    <view class="test-header">
+      <view class="test-counter">第 <text class="test-counter-num">{{current + 1}}</text> / {{questions.length}} 题</view>
+      <view class="test-mode-tag">{{testMode === 'sbti' ? 'SBTI测试' : testMode === 'nmti' ? 'NMTI测试' : 'MBTI测试'}}</view>
     </view>
     <view class="progress">
       <view class="progress-bar" style="width: {{progress}}%"></view>
@@ -11,7 +11,7 @@
   </view>
 
   <!-- 问题卡片 -->
-  <view class="card">
+  <view class="card question-card">
     <view class="question">{{questions[current].text}}</view>
     
     <view wx:for="{{questions[current].options}}" wx:key="id" 
@@ -23,24 +23,22 @@
   </view>
 
   <!-- 底部导航 -->
-  <view style="position: fixed; bottom: 40rpx; left: 0; right: 0; padding: 0 40rpx; display: flex; gap: 20rpx;">
-    <view class="btn secondary-btn" 
-          hover-class="secondary-btn-active"
-          style="flex: 1; opacity: {{current === 0 ? 0.5 : 1}}"
-          bindtap="prevQuestion"
-          wx:if="{{current > 0}}">
-      上一题
+  <view class="test-nav">
+    <view class="test-hint">请选择最符合你日常感受的选项</view>
+    <view style="display: flex; gap: 20rpx; width: 100%;">
+      <view class="btn secondary-btn" 
+            hover-class="secondary-btn-active"
+            style="flex: 1;"
+            bindtap="prevQuestion"
+            wx:if="{{current > 0}}">
+        上一题
+      </view>
+      <view class="btn primary-btn" 
+            hover-class="primary-btn-active"
+            style="flex: 1;"
+            bindtap="nextQuestion">
+        {{current === questions.length - 1 ? '完成测试' : '下一题'}}
+      </view>
     </view>
-    <view class="btn primary-btn" 
-          hover-class="primary-btn-active"
-          style="flex: 1;"
-          bindtap="nextQuestion">
-      {{current === questions.length - 1 ? '完成测试' : '下一题'}}
-    </view>
-  </view>
-
-  <!-- 提示 -->
-  <view style="position: fixed; bottom: 220rpx; left: 50%; transform: translateX(-50%); font-size: 24rpx; color: #94a3b8; text-align: center;">
-    请选择最符合你日常感受的选项
   </view>
 </view>

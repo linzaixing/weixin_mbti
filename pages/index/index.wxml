@@ -10,8 +10,8 @@
             autoplay circular
             duration="500" interval="3000"
             indicator-dots
-            indicator-color="rgba(124,58,237,0.2)"
-            indicator-active-color="#7c3aed">
+            indicator-color="rgba(139,92,246,0.15)"
+            indicator-active-color="#6d28d9">
       <swiper-item wx:for="{{mbtiGroups}}" wx:key="label">
         <view class="mbti-group">
           <view class="mbti-group-label" style="color: {{item.color}}">{{item.label}}</view>
@@ -35,15 +35,15 @@
     </swiper>
 
     <view class="type-legend">
-      <view><text style="color:#7c3aed;">●</text> 紫人</view>
-      <view><text style="color:#16a34a;">●</text> 绿人</view>
-      <view><text style="color:#2563eb;">●</text> 蓝人</view>
-      <view><text style="color:#ea580c;">●</text> 橙人</view>
+      <view><text style="color:#7c3aed;">●</text> 分析家</view>
+      <view><text style="color:#16a34a;">●</text> 提倡者</view>
+      <view><text style="color:#2563eb;">●</text> 守护者</view>
+      <view><text style="color:#ea580c;">●</text> 探索者</view>
     </view>
   </view>
 
   <!-- ============ Hero：性格测试 ============ -->
-  <view class="card">
+  <view class="card hero-card">
     <view class="title">性格测试</view>
     <view class="subtitle">MBTI + SBTI + NMTI 全面性格分析</view>
 
@@ -52,25 +52,29 @@
       MBTI（16型人格）+ SBTI（抽象行为）+ NMTI（职场牛马）
     </view>
 
-    <view class="btn primary-btn" hover-class="primary-btn-active" bindtap="startMBTI">开始 MBTI 性格测试</view>
-    <view class="btn sbti-btn" hover-class="sbti-btn-active" bindtap="startSBTI" style="margin-top: 16rpx;">开始 SBTI 社交电池测试</view>
-    <view class="btn nmti-btn" hover-class="nmti-btn-active" bindtap="startNMTI" style="margin-top: 16rpx;">开始 NMTI 职场牛马测试</view>
-    <view class="btn secondary-btn" hover-class="secondary-btn-active" bindtap="showAbout" style="margin-top: 30rpx; font-size: 30rpx;">了解测试项目</view>
+    <view class="btn {{lastMode === 'mbti' ? 'primary-btn' : 'sbti-btn'}}" hover-class="{{lastMode === 'mbti' ? 'primary-btn-active' : 'sbti-btn-active'}}" bindtap="startMBTI">开始 MBTI 性格测试</view>
+    <view class="btn {{lastMode === 'sbti' ? 'primary-btn' : 'sbti-btn'}}" hover-class="{{lastMode === 'sbti' ? 'primary-btn-active' : 'sbti-btn-active'}}" bindtap="startSBTI">开始 SBTI 社交电池测试</view>
+    <view class="btn {{lastMode === 'nmti' ? 'primary-btn' : 'sbti-btn'}}" hover-class="{{lastMode === 'nmti' ? 'primary-btn-active' : 'sbti-btn-active'}}" bindtap="startNMTI">开始 NMTI 职场牛马测试</view>
+    <view class="btn {{lastMode === 'about' ? 'primary-btn' : 'secondary-btn'}}" hover-class="{{lastMode === 'about' ? 'primary-btn-active' : 'secondary-btn-active'}}" bindtap="showAbout">了解测试项目</view>
   </view>
 
-  <view class="card" style="margin-top: 40rpx;">
-    <view style="display: flex; justify-content: space-around; text-align: center; font-size: 28rpx; color: #64748b;">
-      <view>
-        <text style="font-size: 48rpx; color: #7c3aed;">28</text><br/>MBTI 题
+  <view class="card">
+    <view class="stats-grid">
+      <view class="stat-item">
+        <view class="stat-circle"><text class="stat-number">28</text></view>
+        <text class="stat-label">MBTI 题</text>
       </view>
-      <view>
-        <text style="font-size: 48rpx; color: #7c3aed;">31</text><br/>SBTI 题
+      <view class="stat-item">
+        <view class="stat-circle"><text class="stat-number">31</text></view>
+        <text class="stat-label">SBTI 题</text>
       </view>
-      <view>
-        <text style="font-size: 48rpx; color: #ea580c;">28</text><br/>NMTI 题
+      <view class="stat-item">
+        <view class="stat-circle"><text class="stat-number">28</text></view>
+        <text class="stat-label">NMTI 题</text>
       </view>
-      <view>
-        <text style="font-size: 48rpx; color: #7c3aed;">详尽</text><br/>报告分析
+      <view class="stat-item">
+        <view class="stat-circle"><text class="stat-number" style="font-size: 28rpx;">详尽</text></view>
+        <text class="stat-label">报告分析</text>
       </view>
     </view>
   </view>
@@ -87,7 +91,7 @@
             duration="500" interval="2500">
       <swiper-item wx:for="{{sbtiTypes}}" wx:key="code">
         <view class="sbti-slide">
-          <text class="sbti-slide-emoji">{{item.emoji}}</text>
+          <image src="{{item.img}}" mode="aspectFill" class="slide-avatar" binderror="" />
           <view class="sbti-slide-info">
             <view class="sbti-slide-code">{{item.code}}</view>
             <view class="sbti-slide-name">{{item.name}}</view>
@@ -111,7 +115,7 @@
             duration="500" interval="2000">
       <swiper-item wx:for="{{nmtiTypes}}" wx:key="code">
         <view class="nmti-slide">
-          <text class="nmti-slide-emoji">{{item.emoji}}</text>
+          <image src="{{item.img}}" mode="aspectFill" class="slide-avatar" binderror="" />
           <view class="nmti-slide-info">
             <view class="nmti-slide-code">{{item.code}}</view>
             <view class="nmti-slide-name">{{item.name}}</view>

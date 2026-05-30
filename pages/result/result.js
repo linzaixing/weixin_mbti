@@ -13,7 +13,10 @@ Page({
     nmtiLevels: [],
     isPaid: true,
     isSBTI: false,
-    isNMTI: false
+    isNMTI: false,
+    avatarImg: '',
+    avatarEmoji: '',
+    avatarLoadFail: false
   },
 
   onLoad () {
@@ -41,6 +44,8 @@ Page({
       }))
       setData.nmtiArchetype = archetype
       setData.nmtiLevels = levels
+      setData.avatarImg = '/images/nmti/' + result.nmtiCode.toLowerCase() + '.png'
+      setData.avatarEmoji = archetype.emoji || '🐂'
       wx.setNavigationBarTitle({
         title: `NMTI · ${archetype.name}`
       })
@@ -51,6 +56,14 @@ Page({
       }))
       setData.sbtiArchetype = archetype
       setData.sbtiLevels = levels
+      const sbtiImgMap = {
+        'CTRL': '/CTRL.png', 'HHHH': '/HHHH.png', 'MONK': '/MONK.png',
+        'JOKE-R': '/JOKE-R.jpg', 'SOLO': '/SOLO.png', 'DEAD': '/DEAD.png',
+        'SEXY': '/SEXY.png', 'IMFW': '/IMFW.png'
+      }
+      const imgPath = sbtiImgMap[archetype.code]
+      setData.avatarImg = imgPath ? 'https://laoguo-caiji.oss-cn-beijing.aliyuncs.com/ceping/sbti' + imgPath : ''
+      setData.avatarEmoji = '🎭'
       wx.setNavigationBarTitle({
         title: `SBTI · ${archetype.name}`
       })
@@ -59,12 +72,17 @@ Page({
       const sbtiBarWidth = Math.round(((result.sbtiLevel || 0) + 100) / 2)
       setData.report = report
       setData.sbtiBarWidth = sbtiBarWidth
+      setData.avatarImg = 'https://laoguo-caiji.oss-cn-beijing.aliyuncs.com/ceping/static/81/img/16status/' + result.mbtiType + '.png'
       wx.setNavigationBarTitle({
         title: `${result.mbtiType} 完整报告`
       })
     }
 
     this.setData(setData)
+  },
+
+  onAvatarError () {
+    this.setData({ avatarLoadFail: true })
   },
 
   restartTest () {
@@ -76,7 +94,7 @@ Page({
 
   saveScreenshot () {
     const that = this
-    const { result, report, sbtiArchetype, nmtiArchetype, isSBTI, isNMTI } = this.data
+    const { result, report, sbtiArchetype, nmtiArchetype, isSBTI, isNMTI, avatarImg } = this.data
     if (!result) return
 
     wx.showLoading({ title: '生成中...' })
@@ -100,15 +118,28 @@ Page({
         ctx.scale(dpr, dpr)
 
         var qrImg = canvas.createImage()
-        qrImg.onload = function () {
-          that._drawCard(ctx, W, H, qrImg)
-          doSave()
+        var avatarImage = canvas.createImage()
+        var loadCount = 0
+        var totalLoad = 2
+
+        function onAllLoaded () {
+          loadCount++
+          if (loadCount >= totalLoad) {
+            that._drawCard(ctx, W, H, qrImg, avatarImage)
+            doSave()
+          }
         }
-        qrImg.onerror = function () {
-          that._drawCard(ctx, W, H, null)
-          doSave()
-        }
+
+        qrImg.onload = onAllLoaded
+        qrImg.onerror = onAllLoaded
         qrImg.src = '/images/qrcode.png'
+
+        avatarImage.onload = onAllLoaded
+        avatarImage.onerror = function () {
+          avatarImage = null
+          onAllLoaded()
+        }
+        avatarImage.src = avatarImg || ''
 
         function doSave () {
           setTimeout(function () {
@@ -141,7 +172,7 @@ Page({
       })
   },
 
-  _drawCard (ctx, W, H, qrImg) {
+  _drawCard (ctx, W, H, qrImg, avatarImage) {
     const { result, report, sbtiArchetype, nmtiArchetype, isSBTI, isNMTI } = this.data
 
     ctx.fillStyle = '#f8fafc'
@@ -177,7 +208,8 @@ Page({
       subtitle = sbtiArchetype.name
       code = sbtiArchetype.code
       slogan = sbtiArchetype.slogan
-      emoji = ''
+      emoji = '🎭'
+      accentColor = '#db2777'
     } else if (report) {
       title = 'MBTI 性格测试'
       subtitle = report.typeName
@@ -192,11 +224,24 @@ Page({
     ctx.textAlign = 'center'
     ctx.fillText(title, W / 2, y)
 
-    y += 80
-    if (emoji) {
+    y += 50
+    if (avatarImage) {
+      var avatarSize = 140
+      var avatarX = (W - avatarSize) / 2
+      ctx.save()
+      ctx.beginPath()
+      ctx.arc(avatarX + avatarSize / 2, y + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2)
+      ctx.closePath()
+      ctx.clip()
+      ctx.drawImage(avatarImage, avatarX, y, avatarSize, avatarSize)
+      ctx.restore()
+      y += avatarSize + 30
+    } else if (emoji) {
       ctx.font = '80px sans-serif'
-      ctx.fillText(emoji, W / 2, y)
-      y += 50
+      ctx.fillText(emoji, W / 2, y + 70)
+      y += 100
+    } else {
+      y += 30
     }
 
     y += 40
