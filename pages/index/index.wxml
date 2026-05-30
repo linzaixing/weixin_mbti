@@ -2,7 +2,7 @@
   <!-- ============ 顶部：MBTI 16 型 swiper ============ -->
   <view class="card mbti-swiper-card">
     <view class="card-header">
-      <view class="card-header-title">MBTI 16 型人格</view>
+      <view class="card-header-title">MBTI-人格图谱</view>
       <view class="card-header-sub">每一个都是独一无二的你</view>
     </view>
 

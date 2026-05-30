@@ -189,7 +189,7 @@
 
   <!-- 底部按钮 -->
   <view class="result-actions">
-    <view class="btn primary-btn" hover-class="primary-btn-active" bindtap="restartTest">重新测试</view>
+    <view class="btn secondary-btn" hover-class="secondary-btn-active" bindtap="restartTest">重新测试</view>
     <view class="btn secondary-btn" hover-class="secondary-btn-active" bindtap="saveScreenshot" style="margin-top: 20rpx;">保存截图到本地</view>
     <button class="btn secondary-btn" hover-class="secondary-btn-active" open-type="share" style="margin-top: 20rpx;">分享给好友</button>
   </view>
