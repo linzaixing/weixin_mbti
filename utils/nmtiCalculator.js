@@ -79,14 +79,29 @@ function dimLevels (scores) {
   })
 }
 
+/**
+ * 计算每个维度的置信度（0~100）
+ */
+function calculateNMTIConfidence (scores) {
+  const WEAK_THRESHOLD = 25
+  const SCALE = 30
+  return DIM_KEYS.map(key => {
+    const raw = Math.abs(scores[key] || 0)
+    const confidence = Math.min(100, Math.round((raw / SCALE) * 100))
+    return { dim: key, name: DIM_NAMES[key], confidence, weak: confidence < WEAK_THRESHOLD }
+  })
+}
+
 function calculateNMTI (answers) {
   const scores = calculateNMTIScores(answers)
   const code = determineNMTICode(scores)
   const levels = dimLevels(scores)
+  const confidence = calculateNMTIConfidence(scores)
   return {
     nmtiCode: code,
     nmtiScores: scores,
-    nmtiLevels: levels
+    nmtiLevels: levels,
+    confidence
   }
 }
 
@@ -95,6 +110,7 @@ module.exports = {
   calculateNMTIScores,
   determineNMTICode,
   dimLevels,
+  calculateNMTIConfidence,
   DIM_KEYS,
   DIM_NAMES,
   DIM_PAIRS,

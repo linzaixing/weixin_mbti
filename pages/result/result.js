@@ -16,7 +16,9 @@ Page({
     isNMTI: false,
     avatarImg: '',
     avatarEmoji: '',
-    avatarLoadFail: false
+    avatarLoadFail: false,
+    weakDims: [],
+    weakDimsText: ''
   },
 
   onLoad (options) {
@@ -76,6 +78,20 @@ Page({
       wx.setNavigationBarTitle({
         title: `${result.mbtiType} 完整报告`
       })
+    }
+
+    // 置信度：提取弱维度用于提示
+    if (result.confidence && Array.isArray(result.confidence)) {
+      const DIM_LABEL = {
+        'EI': '外向/内向', 'SN': '感知/直觉', 'TF': '思考/情感', 'JP': '判断/感知',
+        'SLF': '自我模型', 'EMO': '情感模型', 'ATT': '态度模型', 'ACT': '行动模型', 'SOC': '社交模型',
+        'MJ': '工作强度', 'DH': '协作方式', 'RG': '冲突处理', 'WP': '职业流动'
+      }
+      const weakDims = result.confidence
+        .filter(c => c.weak)
+        .map(c => c.name || DIM_LABEL[c.dim] || c.dim)
+      setData.weakDims = weakDims
+      setData.weakDimsText = weakDims.join('、')
     }
 
     this.setData(setData)
@@ -173,7 +189,12 @@ Page({
           avatarImage = null
           onAllLoaded()
         }
-        avatarImage.src = avatarImg || ''
+        if (avatarImg) {
+          avatarImage.src = avatarImg
+        } else {
+          avatarImage = null
+          onAllLoaded()
+        }
 
         function doSave () {
           setTimeout(function () {

@@ -81,16 +81,36 @@ function getSBTIType (level) {
   return '深度充电型 (Recharger)'
 }
 
+/**
+ * 计算每个维度的置信度（0~100）
+ * 置信度 = |正分 - 负分| / (正分 + 负分) * 100
+ * 低于阈值说明该维度倾向不明显
+ */
+function calculateMBTIConfidence (scores) {
+  const WEAK_THRESHOLD = 25
+  const dims = ['EI', 'SN', 'TF', 'JP']
+  const result = dims.map(dim => {
+    const [pos, neg] = DIM_PAIRS[dim]
+    const total = scores[pos] + scores[neg]
+    if (total === 0) return { dim, confidence: 0, weak: true }
+    const confidence = Math.round(Math.abs(scores[pos] - scores[neg]) / total * 100)
+    return { dim, confidence, weak: confidence < WEAK_THRESHOLD }
+  })
+  return result
+}
+
 function calculate (answers) {
   const scores = calculateScores(answers)
   const mbtiType = determineMBTI(scores)
   const sbtiLevel = calculateSBTILevel(scores, answers)
   const sbtiType = getSBTIType(sbtiLevel)
+  const confidence = calculateMBTIConfidence(scores)
   return {
     mbtiType,
     mbtiScores: scores,
     sbtiType,
-    sbtiLevel
+    sbtiLevel,
+    confidence
   }
 }
 
@@ -99,5 +119,6 @@ module.exports = {
   calculateScores,
   determineMBTI,
   calculateSBTILevel,
-  getSBTIType
+  getSBTIType,
+  calculateMBTIConfidence
 }

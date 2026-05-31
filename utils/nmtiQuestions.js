@@ -63,8 +63,8 @@ const nmtiQuestions = [
     text: '年终总结，你会：',
     dimension: 'MJ',
     options: [
-      { id: 'A', text: 'A. 复制去年的改改日期，差不多得了', score: 4 },
-      { id: 'B', text: 'B. 精心准备 PPT，争取被领导看到', score: -4 }
+      { id: 'A', text: 'A. 复制去年的改改日期和数字，最多花20分钟', score: 4 },
+      { id: 'B', text: 'B. 加班做PPT加动画，这是全年唯一一次表现机会', score: -4 }
     ]
   },
   {
@@ -98,11 +98,11 @@ const nmtiQuestions = [
   },
   {
     id: 310,
-    text: '团建活动，你的心态是：',
+    text: '通知下来：本周六全员团建，密室逃脱+聚餐：',
     dimension: 'DH',
     options: [
-      { id: 'A', text: 'A. 社恐地狱，能逃就逃', score: 5 },
-      { id: 'B', text: 'B. 好耶！可以和大家一起玩', score: -5 }
+      { id: 'A', text: 'A. 开始编周六要看牙/搬家/家里有事的借口', score: 5 },
+      { id: 'B', text: 'B. 好耶！已经在想穿什么衣服去了', score: -5 }
     ]
   },
   {
@@ -154,11 +154,11 @@ const nmtiQuestions = [
   },
   {
     id: 316,
-    text: '同事抢了你的功劳，你：',
+    text: '同事在大会上把你做的方案说成是他的，你：',
     dimension: 'RG',
     options: [
-      { id: 'A', text: 'A. 算了，清者自清', score: 4 },
-      { id: 'B', text: 'B. 直接找领导说清楚', score: -4 }
+      { id: 'A', text: 'A. 忍了，心里记着就行，何必当众撕破脸', score: 4 },
+      { id: 'B', text: 'B. 当场补一句"这个方案我当时的思路是..."不动声色拿回来', score: -4 }
     ]
   },
   {
@@ -190,11 +190,11 @@ const nmtiQuestions = [
   },
   {
     id: 320,
-    text: '甲方/客户提了离谱的需求：',
+    text: '甲方在群里@你说"这个方案全部推翻重做"，你：',
     dimension: 'RG',
     options: [
-      { id: 'A', text: 'A. "好的收到" 先应着再想办法', score: 4 },
-      { id: 'B', text: 'B. 明确告知不可行，并给替代方案', score: -4 }
+      { id: 'A', text: 'A. "好的收到" 咬着牙默默打开文档', score: 4 },
+      { id: 'B', text: 'B. "可以明确一下哪些点不满意吗？全部推翻不太现实"', score: -4 }
     ]
   },
   {
@@ -219,11 +219,11 @@ const nmtiQuestions = [
   },
   {
     id: 323,
-    text: '猎头打电话给你：',
+    text: '猎头打电话说"有个机会薪资翻倍"，你：',
     dimension: 'WP',
     options: [
-      { id: 'A', text: 'A. "谢谢，暂时不考虑"', score: 4 },
-      { id: 'B', text: 'B. "说来听听？多少钱？"', score: -4 }
+      { id: 'A', text: 'A. "谢谢，我现在挺稳定的，不考虑了"', score: 4 },
+      { id: 'B', text: 'B. "发个JD我看看？晚上聊细节"', score: -4 }
     ]
   },
   {
@@ -255,11 +255,11 @@ const nmtiQuestions = [
   },
   {
     id: 327,
-    text: '同事纷纷跳槽涨薪，你：',
+    text: '前同事发朋友圈晒跳槽后涨薪50%，你的真实反应：',
     dimension: 'WP',
     options: [
-      { id: 'A', text: 'A. 不为所动，每个人情况不同', score: 3 },
-      { id: 'B', text: 'B. 心动了，我是不是也该看看机会', score: -3 }
+      { id: 'A', text: 'A. 点个赞继续干活，人家是人家我是我', score: 3 },
+      { id: 'B', text: 'B. 默默打开招聘APP看看有没有合适的...', score: -3 }
     ]
   },
   {
@@ -269,6 +269,52 @@ const nmtiQuestions = [
     options: [
       { id: 'A', text: 'A. 在当前公司稳步晋升', score: 4 },
       { id: 'B', text: 'B. 可能换两三份工作找到最合适的', score: -4 }
+    ]
+  },
+
+  // ========== 验证题（每维度 1 道，高权重锚定）==========
+
+  // MJ 验证题
+  {
+    id: 329,
+    text: '周五下午4点，活干完了还有1小时才下班，监控也拍不到你屏幕：',
+    dimension: 'MJ',
+    options: [
+      { id: 'A', text: 'A. 打开购物/短视频/小说——摸到最后一秒，准时打卡走人', score: 6 },
+      { id: 'B', text: 'B. 提前预习下周的任务/学个新工具——闲着也是闲着', score: -6 }
+    ]
+  },
+
+  // DH 验证题
+  {
+    id: 330,
+    text: '公司新来了一批实习生，其中有个坐你旁边的总找你聊天：',
+    dimension: 'DH',
+    options: [
+      { id: 'A', text: 'A. 暗示性地戴上耳机——拜托让我安静工作', score: 6 },
+      { id: 'B', text: 'B. 挺开心的，带新人聊聊天工作也没那么无聊', score: -6 }
+    ]
+  },
+
+  // RG 验证题
+  {
+    id: 331,
+    text: '领导当着全组的面说你负责的模块"做得很一般"，但你觉得不公平：',
+    dimension: 'RG',
+    options: [
+      { id: 'A', text: 'A. 当场不反驳，会后私下找领导单独谈', score: 6 },
+      { id: 'B', text: 'B. 当场礼貌但坚定地说"我有不同看法，可以展开聊聊吗"', score: -6 }
+    ]
+  },
+
+  // WP 验证题
+  {
+    id: 332,
+    text: '入职3年了，工作内容已经完全熟练，没什么新挑战：',
+    dimension: 'WP',
+    options: [
+      { id: 'A', text: 'A. 挺好的，熟练意味着轻松，稳定就是幸福', score: 6 },
+      { id: 'B', text: 'B. 开始觉得无聊了，该是找新刺激的时候了', score: -6 }
     ]
   }
 ]

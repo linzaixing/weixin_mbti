@@ -234,6 +234,12 @@
   letter-spacing: 0.5rpx;
 }
 
+.stat-time {
+  font-size: 20rpx;
+  color: #c084fc;
+  margin-top: 6rpx;
+}
+
 /* ============ SBTI Swiper ============ */
 .sbti-swiper-card {
   padding: 40rpx 24rpx 24rpx;

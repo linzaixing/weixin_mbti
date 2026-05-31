@@ -187,6 +187,14 @@
     </view>
   </block>
 
+  <!-- 置信度提示 -->
+  <view class="card confidence-tip" wx:if="{{weakDimsText}}">
+    <view class="confidence-tip-title">⚠️ 结果参考提示</view>
+    <view class="confidence-tip-text">
+      你在「{{weakDimsText}}」维度上的倾向不太明显，说明你在这些方面可能比较均衡或因情境而异。建议结合实际感受理解结果，也可以重新测试看看是否一致。
+    </view>
+  </view>
+
   <!-- 底部按钮 -->
   <view class="result-actions">
     <view class="btn secondary-btn" hover-class="secondary-btn-active" bindtap="restartTest">重新测试</view>

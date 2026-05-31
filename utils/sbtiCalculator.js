@@ -89,14 +89,29 @@ function modelLevels (scores) {
   })
 }
 
+/**
+ * 计算每个模型的置信度（0~100）
+ */
+function calculateSBTIConfidence (scores) {
+  const WEAK_THRESHOLD = 25
+  const SCALE = 30
+  return MODEL_KEYS.map(key => {
+    const raw = Math.abs(scores[key] || 0)
+    const confidence = Math.min(100, Math.round((raw / SCALE) * 100))
+    return { dim: key, name: MODEL_NAMES[key], confidence, weak: confidence < WEAK_THRESHOLD }
+  })
+}
+
 function calculateSBTI (answers) {
   const scores = calculateSBTIScores(answers)
   const code = determineSBTICode(scores)
   const levels = modelLevels(scores)
+  const confidence = calculateSBTIConfidence(scores)
   return {
     sbtiCode: code,
     sbtiScores: scores,
-    sbtiLevels: levels
+    sbtiLevels: levels,
+    confidence
   }
 }
 
@@ -105,6 +120,7 @@ module.exports = {
   calculateSBTIScores,
   determineSBTICode,
   modelLevels,
+  calculateSBTIConfidence,
   MODEL_KEYS,
   MODEL_NAMES,
   MODEL_LETTER,

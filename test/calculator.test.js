@@ -220,7 +220,7 @@ describe('SBTI 五模型算法', () => {
     assert.strictEqual(arche.code, 'CTRL')
   })
 
-  test('全选 B → seaco（黑洞型 VOID）', () => {
+  test('全选 B → seaco（废物 IMFW）', () => {
     const answers = {}
     const dims = [
       ...Array(6).fill('SLF'),
@@ -235,7 +235,7 @@ describe('SBTI 五模型算法', () => {
     const result = calculateSBTI(answers)
     assert.strictEqual(result.sbtiCode, 'seaco')
     const arche = getSBTIArchetype(result.sbtiCode)
-    assert.strictEqual(arche.code, 'VOID')
+    assert.strictEqual(arche.code, 'IMFW')
   })
 
   test('determineSBTICode 在零分时优先选正字母', () => {
