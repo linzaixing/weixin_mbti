@@ -2,6 +2,7 @@ Page({
   data: {
     avatarUrl: '',
     nickName: '',
+    editingName: false,
     historyList: [],
     version: '',
     changelog: [],
@@ -52,18 +53,38 @@ Page({
       mediaType: ['image'],
       sourceType: ['album', 'camera'],
       success: function (res) {
-        const tempFilePath = res.tempFiles[0].tempFilePath
-        that.setData({ avatarUrl: tempFilePath })
-        wx.setStorageSync('userAvatar', tempFilePath)
+        var tempPath = res.tempFiles[0].tempFilePath
+        var fs = wx.getFileSystemManager()
+        var savedDir = wx.env.USER_DATA_PATH + '/avatar'
+        try { fs.mkdirSync(savedDir, true) } catch (e) { /* ignore */ }
+        var savedPath = savedDir + '/user_avatar.png'
+        fs.saveFile({
+          tempFilePath: tempPath,
+          filePath: savedPath,
+          success: function () {
+            that.setData({ avatarUrl: savedPath })
+            wx.setStorageSync('userAvatar', savedPath)
+          },
+          fail: function () {
+            that.setData({ avatarUrl: tempPath })
+            wx.setStorageSync('userAvatar', tempPath)
+          }
+        })
       }
     })
   },
 
-  onNickNameInput(e) {
+  startEditName() {
+    this.setData({ editingName: true })
+  },
+
+  onNickNameDone(e) {
     const val = (e.detail.value || '').trim()
     if (val) {
-      this.setData({ nickName: val })
+      this.setData({ nickName: val, editingName: false })
       wx.setStorageSync('userNickName', val)
+    } else {
+      this.setData({ editingName: false })
     }
   },
 

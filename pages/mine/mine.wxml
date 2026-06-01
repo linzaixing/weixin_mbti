@@ -2,14 +2,18 @@
   <!-- 个人信息卡片 -->
   <view class="card profile-card">
     <view class="profile-header">
-      <image wx:if="{{avatarUrl}}" src="{{avatarUrl}}" mode="aspectFill" class="profile-avatar" bindtap="chooseAvatar" />
-      <view wx:else class="profile-avatar profile-avatar-default" bindtap="chooseAvatar">
-        <text class="avatar-placeholder">+</text>
+      <view class="avatar-ring" bindtap="chooseAvatar">
+        <image wx:if="{{avatarUrl}}" src="{{avatarUrl}}" mode="aspectFill" class="profile-avatar" />
+        <view wx:else class="profile-avatar profile-avatar-default">
+          <text class="avatar-placeholder">+</text>
+        </view>
       </view>
       <view class="profile-info">
-        <view wx:if="{{nickName}}" class="profile-name">{{nickName}}</view>
-        <input wx:else class="profile-name-input" placeholder="点击设置昵称" bindblur="onNickNameInput" bindconfirm="onNickNameInput" value="{{nickName}}" />
-        <view class="profile-stats">已完成 {{historyList.length}} 次测试</view>
+        <view wx:if="{{!editingName}}" class="profile-name" bindtap="startEditName">
+          {{nickName || '设置你的昵称'}}
+        </view>
+        <input wx:else class="profile-name-input" placeholder="输入昵称" focus="{{editingName}}" bindblur="onNickNameDone" bindconfirm="onNickNameDone" value="{{nickName}}" />
+        <view class="profile-stats">已完成 <text class="stats-num">{{historyList.length}}</text> 次测试</view>
       </view>
     </view>
   </view>
