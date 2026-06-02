@@ -123,5 +123,18 @@ Page({
 
   stopPropagation(e) {
     e.stopPropagation()
+  },
+
+  onShareAppMessage() {
+    return {
+      title: 'MBTI + SBTI + NMTI 性格测试，测测你是什么类型？',
+      path: '/pages/index/index'
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: 'MBTI + SBTI + NMTI 性格测试，测测你是什么类型？'
+    }
   }
 })

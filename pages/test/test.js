@@ -109,5 +109,12 @@ Page({
     app.globalData.hasPaid = true
 
     wx.redirectTo({ url: '/pages/result/result' })
+  },
+
+  onShareAppMessage() {
+    return {
+      title: 'MBTI + SBTI + NMTI 性格测试，测测你是什么类型？',
+      path: '/pages/index/index'
+    }
   }
 })

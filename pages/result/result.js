@@ -357,5 +357,18 @@ Page({
       title = `我是 ${result.mbtiType} · ${report.typeName}，你呢？`
     }
     return { title, path: '/pages/index/index' }
+  },
+
+  onShareTimeline () {
+    const { result, report, sbtiArchetype, nmtiArchetype, isSBTI, isNMTI } = this.data
+    let title = '快来测测你的性格吧'
+    if (isNMTI && nmtiArchetype) {
+      title = `我是职场「${nmtiArchetype.name}」，你呢？`
+    } else if (isSBTI && sbtiArchetype) {
+      title = `我是 SBTI「${sbtiArchetype.name}」，你呢？`
+    } else if (result && report) {
+      title = `我是 ${result.mbtiType} · ${report.typeName}，你呢？`
+    }
+    return { title }
   }
 })
