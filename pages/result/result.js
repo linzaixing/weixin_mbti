@@ -26,7 +26,7 @@ Page({
     const result = app.globalData.testResults
 
     if (!result) {
-      wx.redirectTo({ url: '/pages/index/index' })
+      wx.switchTab({ url: '/pages/index/index' })
       return
     }
 
@@ -60,11 +60,11 @@ Page({
       setData.sbtiLevels = levels
       const sbtiImgMap = {
         'CTRL': '/CTRL.png', 'HHHH': '/HHHH.png', 'MONK': '/MONK.png',
-        'JOKE-R': '/JOKE-R.jpg', 'SOLO': '/SOLO.png', 'DEAD': '/DEAD.png',
+        'JOKE-R': '/JOKE-R.png', 'SOLO': '/SOLO.png', 'DEAD': '/DEAD.png',
         'SEXY': '/SEXY.png', 'IMFW': '/IMFW.png'
       }
       const imgPath = sbtiImgMap[archetype.code]
-      setData.avatarImg = imgPath ? 'https://laoguo-caiji.oss-cn-beijing.aliyuncs.com/ceping/sbti' + imgPath : ''
+      setData.avatarImg = imgPath ? '/images/sbti' + imgPath : ''
       setData.avatarEmoji = '🎭'
       wx.setNavigationBarTitle({
         title: `SBTI · ${archetype.name}`
@@ -139,7 +139,7 @@ Page({
     const app = getApp()
     app.globalData.testResults = null
     app.globalData.hasPaid = false
-    wx.redirectTo({ url: '/pages/index/index' })
+    wx.switchTab({ url: '/pages/index/index' })
   },
 
   saveScreenshot () {
@@ -211,9 +211,23 @@ Page({
                     wx.hideLoading()
                     wx.showToast({ title: '已保存到相册', icon: 'success' })
                   },
-                  fail: function () {
+                  fail: function (err) {
                     wx.hideLoading()
-                    wx.showToast({ title: '保存失败，请授权相册权限', icon: 'none' })
+                    if (err.errMsg && (err.errMsg.indexOf('auth') !== -1 || err.errMsg.indexOf('deny') !== -1 || err.errMsg.indexOf('authorize') !== -1)) {
+                      wx.showModal({
+                        title: '需要相册权限',
+                        content: '请在设置中允许"保存到相册"权限，才能保存截图',
+                        confirmText: '去设置',
+                        cancelText: '取消',
+                        success: function (modalRes) {
+                          if (modalRes.confirm) {
+                            wx.openSetting()
+                          }
+                        }
+                      })
+                    } else {
+                      wx.showToast({ title: '保存失败', icon: 'none' })
+                    }
                   }
                 })
               },

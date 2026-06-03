@@ -10,6 +10,7 @@ page {
 
 .container {
   padding: 28rpx 32rpx;
+  padding-bottom: 140rpx;
   box-sizing: border-box;
 }
 

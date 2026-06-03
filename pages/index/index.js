@@ -1,5 +1,5 @@
 const MBTI_IMG_BASE = 'https://laoguo-caiji.oss-cn-beijing.aliyuncs.com/ceping/static/81/img/16status'
-const SBTI_IMG_BASE = 'https://laoguo-caiji.oss-cn-beijing.aliyuncs.com/ceping/sbti'
+const SBTI_IMG_BASE = '/images/sbti'
 
 const MBTI_DESC = {
   INTJ: '独立远见的战略家，善于制定长远计划，追求效率与完美，内心有着清晰的蓝图和坚定信念。',
@@ -89,7 +89,7 @@ const SBTI_HIGHLIGHTS = [
   { code: 'CTRL',   name: '拿捏者', emoji: '👑', img: SBTI_IMG_BASE + '/CTRL.png' },
   { code: 'HHHH',   name: '傻乐者', emoji: '😂', img: SBTI_IMG_BASE + '/HHHH.png' },
   { code: 'MONK',   name: '僧人',   emoji: '🧘', img: SBTI_IMG_BASE + '/MONK.png' },
-  { code: 'JOKE-R', name: '小丑',   emoji: '🤡', img: SBTI_IMG_BASE + '/JOKE-R.jpg' },
+  { code: 'JOKE-R', name: '小丑',   emoji: '🤡', img: SBTI_IMG_BASE + '/JOKE-R.png' },
   { code: 'SOLO',   name: '孤儿',   emoji: '🐺', img: SBTI_IMG_BASE + '/SOLO.png' },
   { code: 'DEAD',   name: '死者',   emoji: '💀', img: SBTI_IMG_BASE + '/DEAD.png' },
   { code: 'SEXY',   name: '尤物',   emoji: '🔥', img: SBTI_IMG_BASE + '/SEXY.png' },
@@ -134,6 +134,9 @@ Page({
   onShow() {
     const lastMode = wx.getStorageSync('lastTestMode') || 'mbti'
     this.setData({ lastMode })
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 0 })
+    }
   },
 
   startMBTI() {

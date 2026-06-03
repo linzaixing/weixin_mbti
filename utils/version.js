@@ -24,15 +24,17 @@
  *   - package.json 的 version 是 npm 元数据，与小程序运行无关。
  */
 const VERSION_INFO = {
-  version: '1.7.0',
+  version: '1.7.1',
   changelog: [
     {
-      version: '1.7.0',
-      date: '2026-06-02',
+      version: '1.7.1',
+      date: '2026-06-03',
       title: '审核合规版',
       changes: [
-        '新增修改昵称功能',
-        '新增分享小程序功能',
+        "优化性格小人形象",
+        "新增默认emoji头像和昵称",
+        '修复报告页无法保存截图的问题',
+        '修复点击重新测试后无反应的问题',
       ]
     }
   ]

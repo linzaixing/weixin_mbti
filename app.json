@@ -6,11 +6,11 @@
     "pages/mine/mine"
   ],
   "tabBar": {
+    "custom": true,
     "color": "#94a3b8",
     "selectedColor": "#6d28d9",
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
-    "fontSize": 12,
     "list": [
       {
         "pagePath": "pages/index/index",

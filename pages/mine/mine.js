@@ -21,11 +21,28 @@ Page({
 
   onShow() {
     this.loadHistory()
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 1 })
+    }
   },
 
   loadProfile() {
-    const avatarUrl = wx.getStorageSync('userAvatar') || ''
-    const nickName = wx.getStorageSync('userNickName') || ''
+    let avatarUrl = wx.getStorageSync('userAvatar') || ''
+    let nickName = wx.getStorageSync('userNickName') || ''
+
+    if (!nickName) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+      let prefix = ''
+      for (let i = 0; i < 4; i++) prefix += chars[Math.floor(Math.random() * chars.length)]
+      const id = Math.floor(1000 + Math.random() * 9000)
+      nickName = prefix + id
+      wx.setStorageSync('userNickName', nickName)
+    }
+
+    if (!avatarUrl) {
+      avatarUrl = '/images/default-avatar.png'
+    }
+
     this.setData({ avatarUrl, nickName })
   },
 

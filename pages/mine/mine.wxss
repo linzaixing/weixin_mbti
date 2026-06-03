@@ -1,6 +1,6 @@
 .container {
   padding: 28rpx 32rpx;
-  padding-bottom: 60rpx;
+  padding-bottom: 140rpx;
 }
 
 /* 个人信息卡片 */

@@ -95,6 +95,15 @@ button.secondary-btn {
   background: linear-gradient(135deg, #f3e8ff, #fce7f3);
 }
 
+.result-avatar-lg {
+  width: 240rpx;
+  height: 240rpx;
+}
+
+.result-avatar-square {
+  border-radius: 24rpx;
+}
+
 .result-avatar-emoji {
   display: flex;
   align-items: center;
